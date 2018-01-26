@@ -33,6 +33,54 @@ return [
     ],
 
     'backend' => [
+        'suppliers'  =>  [
+            'create'    =>  'Create Supplier',
+            'edit'      =>  'Edit :supplier',
+            'list'      =>  'Supplier\'s List',
+            'view'      =>  'View :supplier',
+            'deleted'   =>  'Deleted Suppliers',
+
+            'management'    =>  'Supplier Management',
+
+            'table' =>  [
+                'id'                        =>  'ID',
+                'name'                      =>  'Company Name',
+                'contact_person_first_name' =>  'First Name',
+                'contact_person_last_name'  =>  'Last Name',
+                'mobile_number'             =>  'Mobile Number',
+                'telephone_number'          =>  'Telephone Number',
+                'email'                     =>  'E-mail',
+                'address'                   =>  'Address',
+                'created_at'                =>  'Date Created',
+                'updated_at'                =>  'Date Updated',
+                'deleted_at'                =>  'Date Deleted',
+                'total'                     =>  'supplier total|suppliers total',
+            ],
+
+            'tabs'  =>  [
+                'titles'    =>  [
+                    'overview'  =>  'Overview'
+                ],
+
+                'content'   =>  [
+                    'overview'  =>  [
+                        'name'                      =>  'Company Name',
+                        'contact_person_first_name' =>  'Contact Person First Name',
+                        'contact_person_last_name'  =>  'Contact Person Last Name',
+                        'email'                     =>  'E-mail',
+                        'address'                   =>  'Address',
+                        'mobile_number'             =>  'Mobile Number',
+                        'telephone_number'          =>  'Telephone Number',
+                        'created_at'                =>  'Date Created',
+                        'updated_at'                =>  'Date Updated',
+                        'deleted_at'                =>  'Date Deleted'
+                    ]
+                ]
+            ],
+
+            'show'  =>  'Show Supplier'
+        ],
+
         'access' => [
             'roles' => [
                 'create'     => 'Create Role',

@@ -14,6 +14,14 @@ return [
     */
 
     'backend' => [
+        'suppliers' =>  [
+            'created'   =>  'Supplier \':supplier\' was successfully created.',
+            'deleted'   =>  'Supplier \':supplier\' was successfully deleted.',
+            'updated'   =>  'Supplier \':supplier\' was successfully updated',
+            'restored'  =>  'Supplier \':supplier\' was successfully restored.',
+            'deleted_permanently'   =>  'Supplier \':supplier\' was successfully deleted permanently.',
+        ],
+
         'roles' => [
             'created' => 'The role was successfully created.',
             'deleted' => 'The role was successfully deleted.',

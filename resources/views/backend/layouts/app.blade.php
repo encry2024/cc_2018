@@ -50,12 +50,6 @@
 
     @include('backend.includes.footer')
 
-    <style>
-        body {
-            font-size: 12.5px !important;
-        }
-    </style>
-
     <!-- Scripts -->
     @stack('before-scripts')
     {!! script(mix('js/backend.js')) !!}

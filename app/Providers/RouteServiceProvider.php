@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Auth\User;
+use App\Models\Supplier\Supplier;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -39,6 +40,12 @@ class RouteServiceProvider extends ServiceProvider
             $user = new User;
 
             return User::withTrashed()->where($user->getRouteKeyName(), $value)->first();
+        });
+
+        $this->bind('deletedSupplier', function ($value) {
+            $supplier = new Supplier;
+
+            return Supplier::withTrashed()->where($supplier->getRouteKeyName(), $value)->first();
         });
 
         parent::boot();

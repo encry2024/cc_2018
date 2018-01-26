@@ -1,1 +1,37 @@
 // Here you can add other styles
+.sidebar .nav .nav-item .nav-link:hover i, .sidebar .nav .nav-item .navbar .dropdown-toggle:hover i, .navbar .sidebar .nav .nav-item .dropdown-toggle:hover i {
+  color: #fff !important;
+}
+
+body {
+  font-size: 12px;
+}
+
+.breadcrumb-menu .btn {
+  padding-top: 0.60rem;
+  padding-bottom: 0.5rem;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: .5rem;
+  padding-top: 0.5rem;
+}
+
+.btn-danger {
+  color: #fff !important;
+  background-color: #f86c6b;
+  border-color: #f86c6b;
+}
+
+.btn-info {
+  color: #FFF;
+  background-color: #63c2de;
+  border-color: #63c2de;
+}
+
+.btn-info:hover {
+  color: #FFF;
+  background-color: #43b6d7;
+  border-color: #39b2d5;
+}

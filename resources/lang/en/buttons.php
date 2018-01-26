@@ -14,6 +14,11 @@ return [
     */
 
     'backend' => [
+        'suppliers' =>  [
+            'delete'                =>  'Delete Supplier',
+            'delete_permanently'    =>  'Delete Permanently'
+        ],
+
         'access' => [
             'users' => [
                 'activate'           => 'Activate',

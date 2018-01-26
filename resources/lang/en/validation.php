@@ -119,6 +119,16 @@ return [
     'attributes' => [
 
         'backend' => [
+            'supplier'  =>  [
+                'name'                      =>  'Company Name',
+                'contact_person_first_name' =>  'Contact Person\'s First Name',
+                'contact_person_last_name'  =>  'Contact Person\'s Last Name',
+                'email'                     =>  'E-mail',
+                'mobile_number'             =>  'Mobile Number',
+                'telephone_number'          =>  'Telephone Number',
+                'address'                   =>  'Address'
+            ],
+
             'access' => [
                 'permissions' => [
                     'associated_roles' => 'Associated Roles',

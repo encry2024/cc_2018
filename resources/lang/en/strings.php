@@ -14,6 +14,10 @@ return [
     */
 
     'backend' => [
+        'suppliers' =>  [
+            'no_deleted'    =>  'There are no deleted suppliers.',
+        ],
+
         'access' => [
             'users' => [
                 'delete_user_confirm'  => 'Are you sure you want to delete this user permanently? Anywhere in the application that references this user\'s id will most likely error. Proceed at your own risk. This can not be un-done.',

@@ -14,6 +14,16 @@ return [
     */
 
     'backend' => [
+        'suppliers'  =>  [
+            'title' =>  'Supplier Management',
+
+            'all'       =>  'All Suppliers',
+            'create'    =>  'Create Supplier',
+            'edit'      =>  'Edit Supplier',
+            'deleted'   =>  'Deleted Suppliers',
+            'main'      =>  'Suppliers'
+        ],
+
         'access' => [
             'title' => 'Access Management',
 
@@ -45,6 +55,7 @@ return [
 
         'sidebar' => [
             'dashboard' => 'Dashboard',
+            'supplier'  => 'Suppliers',
             'general'   => 'General',
             'system'    => 'System',
         ],

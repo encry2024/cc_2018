@@ -5,4 +5,5 @@ Breadcrumbs::register('admin.dashboard', function ($breadcrumbs) {
 });
 
 require __DIR__.'/auth.php';
+require __DIR__.'/general.php';
 require __DIR__.'/log-viewer.php';
