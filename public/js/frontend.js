@@ -53293,15 +53293,15 @@ module.exports = Component.exports
 /***/ (function(module, exports) {
 
 /**
- * Allows you to add data-method="METHOD to links to automatically inject a form
- * with the method on click
- *
- * Example: <a href="{{route('customers.destroy', $customer->id)}}"
- * data-method="delete" name="delete_item">Delete</a>
- *
- * Injects a form with that's fired on click of the link with a DELETE request.
- * Good because you don't have to dirty your HTML with delete forms everywhere.
- */
+* Allows you to add data-method="METHOD to links to automatically inject a form
+* with the method on click
+*
+* Example: <a href="{{route('customers.destroy', $customer->id)}}"
+* data-method="delete" name="delete_item">Delete</a>
+*
+* Injects a form with that's fired on click of the link with a DELETE request.
+* Good because you don't have to dirty your HTML with delete forms everywhere.
+*/
 function addDeleteForms() {
     $('[data-method]').append(function () {
         if (!$(this).find('form').length > 0) return "\n" + "<form action='" + $(this).attr('href') + "' method='POST' name='delete_item' style='display:none'>\n" + "<input type='hidden' name='_method' value='" + $(this).attr('data-method') + "'>\n" + "<input type='hidden' name='_token' value='" + $('meta[name="csrf-token"]').attr('content') + "'>\n" + "</form>\n";else return "";

@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use App\Models\Auth\User;
 use App\Models\Supplier\Supplier;
+use App\Models\Item\Item;
+use App\Models\Customer\Customer;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -36,16 +39,33 @@ class RouteServiceProvider extends ServiceProvider
          * This allows us to use the Route Model Binding with SoftDeletes on
          * On a model by model basis
          */
+
+        # User
         $this->bind('deletedUser', function ($value) {
             $user = new User;
 
             return User::withTrashed()->where($user->getRouteKeyName(), $value)->first();
         });
 
+        # Supplier
         $this->bind('deletedSupplier', function ($value) {
             $supplier = new Supplier;
 
             return Supplier::withTrashed()->where($supplier->getRouteKeyName(), $value)->first();
+        });
+
+        # Item
+        $this->bind('deletedItem', function ($value) {
+            $item = new Item;
+
+            return Item::withTrashed()->where($item->getRouteKeyName(), $value)->first();
+        });
+
+        # Customer
+        $this->bind('deletedCustomer', function ($value) {
+            $customer = new Customer;
+
+            return Customer::withTrashed()->where($customer->getRouteKeyName(), $value)->first();
         });
 
         parent::boot();
