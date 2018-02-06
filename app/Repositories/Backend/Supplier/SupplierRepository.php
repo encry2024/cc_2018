@@ -4,12 +4,16 @@ namespace App\Repositories\Backend\Supplier;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
+
 use App\Models\Auth\User;
 use App\Models\Supplier\Supplier;
+use App\Models\Item\Item;
+use App\Models\Item\ItemOrder;
+
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
-use App\Events\Backend\Supplier\SupplierCreated;
 
+use App\Events\Backend\Supplier\SupplierCreated;
 use App\Events\Backend\Supplier\SupplierUpdated;
 use App\Events\Backend\Supplier\SupplierRestored;
 use App\Events\Backend\Supplier\SupplierPermanentlyDeleted;
@@ -57,6 +61,35 @@ class SupplierRepository extends BaseRepository
     }
 
     /**
+     * @param int    $paged
+     * @param string $orderBy
+     * @param string $sort
+     *
+     * @return LengthAwarePaginator
+     */
+    public function getProductsPaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc', $supplier_id) : LengthAwarePaginator
+    {
+        return Item::whereSupplierId($supplier_id)
+        ->orderBy($orderBy, $sort)
+        ->paginate($paged);
+    }
+
+    /**
+     * @param int    $paged
+     * @param string $orderBy
+     * @param string $sort
+     *
+     * @return LengthAwarePaginator
+     */
+    public function getItemOrderPaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc', $supplier_id) : LengthAwarePaginator
+    {
+        return ItemOrder::whereSupplierId($supplier_id)
+            ->with(['item', 'supplier'])
+            ->orderBy($orderBy, $sort)
+            ->paginate($paged);
+    }
+
+    /**
      * @param array $data
      *
      * @return Supplier
@@ -68,7 +101,7 @@ class SupplierRepository extends BaseRepository
                 'name'                      => strtoupper($data['name']),
                 'contact_person_first_name' => strtoupper($data['contact_person_first_name']),
                 'contact_person_last_name'  => strtoupper($data['contact_person_last_name']),
-                'email'                     => strtoupper($data['email']),
+                'email'                     => $data['email'],
                 'mobile_number'             => $data['mobile_number'],
                 'telephone_number'          => isset($data['telephone_number']) ? $data['telephone_number'] : 'N/A',
                 'address'                   => strtoupper($data['address'])
@@ -97,7 +130,7 @@ class SupplierRepository extends BaseRepository
                 'name'                      => strtoupper($data['name']),
                 'contact_person_first_name' => strtoupper($data['contact_person_first_name']),
                 'contact_person_last_name'  => strtoupper($data['contact_person_last_name']),
-                'email'                     => strtoupper($data['email']),
+                'email'                     => $data['email'],
                 'mobile_number'             => $data['mobile_number'],
                 'telephone_number'          => isset($data['telephone_number']) ? $data['telephone_number'] : 'N/A',
                 'address'                   => strtoupper($data['address'])

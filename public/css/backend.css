@@ -18512,6 +18512,7 @@ hr.transparent {
 
 body {
   font-size: 12px;
+  font-weight: 600;
 }
 
 .breadcrumb-menu .btn {
@@ -18541,5 +18542,26 @@ label {
   color: #FFF;
   background-color: #43b6d7;
   border-color: #39b2d5;
+}
+
+.btn .badge {
+  position: absolute;
+  top: 0px;
+  right: 15px;
+  font-size: 9px;
+}
+
+.top .notific8-notification {
+  margin-top: 1.625em;
+}
+
+.notific8-notification.family-materialish.lilrobot,
+.notific8-notification.materialish.lilrobot {
+  background-color: #28a745 !important;
+  color: #eee;
+}
+
+.cart-table-hover tbody tr:hover {
+  background-color: #e6f6fb;
 }
 

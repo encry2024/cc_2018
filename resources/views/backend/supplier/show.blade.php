@@ -24,11 +24,24 @@
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-expanded="true"><i class="fa fa-user"></i> {{ __('labels.backend.suppliers.tabs.titles.overview') }}</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#products" role="tab" aria-controls="product" aria-expanded="true"><i class="fa fa-archive" aria-hidden="true"></i> {{ __('labels.backend.suppliers.tabs.titles.products') }}</a>
+                        </li>
+
+                        <li class="nav-item" style="margin-left: 52rem;">
+                            <a class="btn btn-default btn-sm" style="font-size: 17px; color: #536c79;" href="{{ route('admin.supplier.cart', $supplier->id) }}" aria-controls="cart" aria-expanded="true"><i class="fa fa-cart-plus" aria-hidden="true"></i>
+                                <span class="badge badge-info">{{ $supplier->item_orders->count() }}</span></a>
+                        </li>
                     </ul>
 
                     <div class="tab-content">
                         <div class="tab-pane active" id="overview" role="tabpanel" aria-expanded="true">
                             @include('backend.supplier.show.tabs.overview')
+                        </div><!--tab-->
+
+                        <div class="tab-pane" id="products" role="tabpanel" aria-expanded="true">
+                            @include('backend.supplier.show.tabs.products')
                         </div><!--tab-->
                     </div><!--tab-content-->
                 </div><!--col-->
@@ -49,4 +62,49 @@
             </div><!--row-->
         </div><!--card-footer-->
     </div><!--card-->
+
+    <script>
+        $(function() {
+            $(".requested-quantity").on('change', function() {
+                var item_quantity_var   =   0,
+                    diq                 =   $(this).closest('tr');
+
+                item_quantity_var = $(this).val();
+                // Debug
+                console.log(item_quantity_var);
+                // Debug - .data('item-quantity', item_quantity_var)
+                diq.find(".order_btn").attr('data-item-quantity', item_quantity_var);
+
+                if(item_quantity_var == 0) {
+                    diq.find(".order_btn").attr('disabled', true);
+                } else {
+                    diq.find(".order_btn").removeAttr('disabled');
+                }
+            });
+
+            $(".order_btn").on('click', function() {
+                var item_id = $(this).data('value');
+                var quantity = $(this).data('item-quantity');
+
+                $.ajax({
+                    type: "post",
+                    url: "{{ route('admin.item.store_order') }}",
+                    data: {
+                        _token:         '{{ csrf_token() }}',
+                        item_id:        item_id,
+                        quantity:       quantity,
+                        supplier_id:    "{{ $supplier->id }}"
+                    },
+                    dataType: 'JSON',
+                    success: function(data) {
+                        notific8("Product '" + data.name + "' has been added to queue.", {
+                            life:    5000,
+                            theme:  'materialish',
+                            color:  'lilrobot'
+                        });
+                    }
+                });
+            });
+        })
+    </script>
 @endsection

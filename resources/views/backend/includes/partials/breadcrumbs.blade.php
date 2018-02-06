@@ -1,6 +1,6 @@
 @if ($breadcrumbs)
     <ol class="breadcrumb">
-        <li class="breadcrumb-item">Home</li>
+        <li class="breadcrumb-item">Con Carne :: CRM</li>
 
         @foreach ($breadcrumbs as $breadcrumb)
             @if ($breadcrumb->url && !$loop->last)

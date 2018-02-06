@@ -13,6 +13,14 @@
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/supplier*')) }}" href="{{ route('admin.supplier.index') }}"><i class="fa fa-truck"></i> {{ __('menus.backend.sidebar.supplier') }}</a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/item*')) }}" href="{{ route('admin.item.index') }}"><i class="fa fa-archive" aria-hidden="true"></i> {{ __('menus.backend.sidebar.item') }}</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/customer*')) }}" href="{{ route('admin.customer.index') }}"><i class="fa fa-users"></i> {{ __('menus.backend.sidebar.customer') }}</a>
+            </li>
+
             <li class="nav-title">
                 {{ __('menus.backend.sidebar.system') }}
             </li>

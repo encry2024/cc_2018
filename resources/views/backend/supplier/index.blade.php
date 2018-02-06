@@ -29,8 +29,7 @@
                                 <tr>
                                     <th>{{ __('labels.backend.suppliers.table.id') }}</th>
                                     <th>{{ __('labels.backend.suppliers.table.name') }}</th>
-                                    <th>{{ __('labels.backend.suppliers.table.contact_person_last_name') }}</th>
-                                    <th>{{ __('labels.backend.suppliers.table.contact_person_first_name') }}</th>
+                                    <th>{{ __('labels.backend.suppliers.table.contact_person_full_name') }}</th>
                                     <th>{{ __('labels.backend.suppliers.table.email') }}</th>
                                     <th>{{ __('labels.backend.suppliers.table.mobile_number') }}</th>
                                     <th>{{ __('labels.backend.suppliers.table.created_at') }}</th>
@@ -43,8 +42,7 @@
                                 <tr>
                                     <td>{{ $supplier->id }}</td>
                                     <td>{{ $supplier->name }}</td>
-                                    <td>{{ $supplier->contact_person_last_name }}</td>
-                                    <td>{{ $supplier->contact_person_first_name }}</td>
+                                    <td>{{ $supplier->full_name }}</td>
                                     <td>{{ $supplier->email }}</td>
                                     <td>{{ $supplier->mobile_number }}</td>
                                     <td>{{ $supplier->created_at->diffForHumans() }}</td>
