@@ -14,6 +14,18 @@ return [
     */
 
     'backend' => [
+        'transactions' => [
+            'no_deleted'    =>  'There are no delete transactions.'
+        ],
+
+        'customers' =>  [
+            'no_deleted'    =>  'There are no deleted customers.'
+        ],
+        
+        'items' =>  [
+            'no_deleted'    =>  'There are no deleted items.'
+        ],
+
         'suppliers' =>  [
             'no_deleted'    =>  'There are no deleted suppliers.',
         ],

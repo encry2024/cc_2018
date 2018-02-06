@@ -14,6 +14,30 @@ return [
     */
 
     'backend' => [
+        'transactions' =>  [
+            'created'   =>  'Transaction \':transaction\' was successfully created.',
+            'deleted'   =>  'Transaction \':transaction\' was successfully deleted.',
+            'updated'   =>  'Transaction \':transaction\' was successfully updated',
+            'restored'  =>  'Transaction \':transaction\' was successfully restored.',
+            'deleted_permanently'   =>  'Transaction \':transaction\' was successfully deleted permanently.',
+        ],
+
+        'customers' =>  [
+            'created'   =>  'Customer \':customer\' was successfully created.',
+            'deleted'   =>  'Customer \':customer\' was successfully deleted.',
+            'updated'   =>  'Customer \':customer\' was successfully updated',
+            'restored'  =>  'Customer \':customer\' was successfully restored.',
+            'deleted_permanently'   =>  'Customer \':customer\' was successfully deleted permanently.',
+        ],
+
+        'items' =>  [
+            'created'   =>  'Item \':item\' was successfully created.',
+            'deleted'   =>  'Item \':item\' was successfully deleted.',
+            'updated'   =>  'Item \':item\' was successfully updated',
+            'restored'  =>  'Item \':item\' was successfully restored.',
+            'deleted_permanently'   =>  'Item \':item\' was successfully deleted permanently.',
+        ],
+
         'suppliers' =>  [
             'created'   =>  'Supplier \':supplier\' was successfully created.',
             'deleted'   =>  'Supplier \':supplier\' was successfully deleted.',

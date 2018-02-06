@@ -103,6 +103,10 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+
+        'item.*.item_id'    =>  [
+            'required'  =>  'Request for supply failed. Select at least 1 item.'
+        ]
     ],
 
     /*
@@ -119,6 +123,25 @@ return [
     'attributes' => [
 
         'backend' => [
+            'customer'  =>  [
+                'name'                  =>  'Customer Name',
+                'email'                 =>  'E-mail',
+                'contact_number'        =>  'Contact Number',
+                'address'               =>  'Address',
+                'discount'              =>  'Discount'
+            ],
+
+            'item'  =>  [
+                'name'                      =>  'Product Name',
+                'supplier'                  =>  'Supplier',
+                'selling_price'             =>  'Selling Price',
+                'buying_price'              =>  'Buying Price',
+                'initial_weight'            =>  'Initial Weight',
+                'initial_weight_type'       =>  'Initial Weight Type',
+                'final_weight'              =>  'Final Weight',
+                'final_weight_type'         =>  'Final Weight Type'
+            ],
+
             'supplier'  =>  [
                 'name'                      =>  'Company Name',
                 'contact_person_first_name' =>  'Contact Person\'s First Name',

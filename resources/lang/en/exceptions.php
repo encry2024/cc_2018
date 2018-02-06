@@ -14,6 +14,38 @@ return [
     */
 
     'backend' => [
+        'transactions'  =>  [
+            'cant_restore'          => 'This transaction is not deleted so it can not be restored.',
+            'create_error'          => 'There was a problem creating this transaction. Please try again.',
+            'delete_error'          => 'There was a problem deleting this transaction. Please try again.',
+            'delete_first'          => 'This transaction must be deleted first before it can be destroyed permanently.',
+            'email_error'           => 'That email address belongs to a different transaction.',
+        ],
+
+        'customers'  =>  [
+            'cant_restore'          => 'This customer is not deleted so it can not be restored.',
+            'create_error'          => 'There was a problem creating this customer. Please try again.',
+            'delete_error'          => 'There was a problem deleting this customer. Please try again.',
+            'delete_first'          => 'This customer must be deleted first before it can be destroyed permanently.',
+            'email_error'           => 'That email address belongs to a different customer.',
+        ],
+
+        'item_orders'  =>  [
+            'cant_restore'          => 'This item order is not deleted so it can not be restored.',
+            'create_error'          => 'There was a problem creating this item order. Please try again.',
+            'delete_error'          => 'There was a problem deleting this item order. Please try again.',
+            'delete_first'          => 'This item order must be deleted first before it can be destroyed permanently.',
+            'email_error'           => 'That email address belongs to a different item.',
+        ],
+
+        'items'  =>  [
+            'cant_restore'          => 'This item is not deleted so it can not be restored.',
+            'create_error'          => 'There was a problem creating this item. Please try again.',
+            'delete_error'          => 'There was a problem deleting this item. Please try again.',
+            'delete_first'          => 'This item must be deleted first before it can be destroyed permanently.',
+            'email_error'           => 'That email address belongs to a different item.',
+        ],
+
         'suppliers'  =>  [
             'cant_restore'          => 'This supplier is not deleted so it can not be restored.',
             'create_error'          => 'There was a problem creating this supplier. Please try again.',

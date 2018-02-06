@@ -14,6 +14,21 @@ return [
     */
 
     'backend' => [
+        'transactions' =>  [
+            'delete'                =>  'Delete Transaction',
+            'delete_permanently'    =>  'Delete Permanently'
+        ],
+
+        'customers' =>  [
+            'delete'                =>  'Delete Customer',
+            'delete_permanently'    =>  'Delete Permanently'
+        ],
+
+        'items' =>  [
+            'delete'                =>  'Delete Item',
+            'delete_permanently'    =>  'Delete Permanently'
+        ],
+
         'suppliers' =>  [
             'delete'                =>  'Delete Supplier',
             'delete_permanently'    =>  'Delete Permanently'

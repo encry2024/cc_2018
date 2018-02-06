@@ -1,4 +1,4 @@
-/**
+    /**
  * Allows you to add data-method="METHOD to links to automatically inject a form
  * with the method on click
  *
@@ -81,3 +81,4 @@ $(function(){
         });
     });
 });
+

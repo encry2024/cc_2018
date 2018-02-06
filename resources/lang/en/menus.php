@@ -14,6 +14,36 @@ return [
     */
 
     'backend' => [
+        'transactions'  =>  [
+            'title'     =>  'Transaction Management',
+
+            'all'       =>  'All Transactions',
+            'create'    =>  'Create Transaction',
+            'edit'      =>  'Edit Transaction',
+            'deleted'   =>  'Deleted Transactions',
+            'main'      =>  'Transactions'
+        ],
+
+        'customers'  =>  [
+            'title'     =>  'Customer Management',
+
+            'all'       =>  'All Customers',
+            'create'    =>  'Create Customer',
+            'edit'      =>  'Edit Customer',
+            'deleted'   =>  'Deleted Customers',
+            'main'      =>  'Customers'
+        ],
+
+        'items'  =>  [
+            'title'     =>  'Item Management',
+
+            'all'       =>  'All Items',
+            'create'    =>  'Create Item',
+            'edit'      =>  'Edit Item',
+            'deleted'   =>  'Deleted Items',
+            'main'      =>  'Items'
+        ],
+
         'suppliers'  =>  [
             'title' =>  'Supplier Management',
 
@@ -54,10 +84,12 @@ return [
         ],
 
         'sidebar' => [
-            'dashboard' => 'Dashboard',
-            'supplier'  => 'Suppliers',
-            'general'   => 'General',
-            'system'    => 'System',
+            'dashboard' =>  'Dashboard',
+            'supplier'  =>  'Suppliers',
+            'item'      =>  'Items',
+            'customer'  =>  'Customers',
+            'general'   =>  'General',
+            'system'    =>  'System',
         ],
     ],
 
