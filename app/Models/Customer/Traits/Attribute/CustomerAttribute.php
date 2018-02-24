@@ -18,6 +18,14 @@ trait CustomerAttribute
     /**
      * @return string
      */
+    public function getOrderButtonAttribute()
+    {
+        return '<a href="'.route('admin.customer.order', $this).'" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Make an Order"><i class="fa fa-truck" data-toggle="tooltip" data-placement="top"></i></a>';
+    }
+
+    /**
+     * @return string
+     */
     public function getEditButtonAttribute()
     {
         return '<a href="'.route('admin.customer.edit', $this).'" class="btn btn-primary"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="'.__('buttons.general.crud.edit').'"></i></a>';
@@ -77,6 +85,7 @@ trait CustomerAttribute
 
         return '
             <div class="btn-group btn-group-sm" role="group" aria-label="Customer Actions">
+            '.$this->order_button.'
             '.$this->show_button.'
             '.$this->edit_button.'
             '.$this->delete_button.'

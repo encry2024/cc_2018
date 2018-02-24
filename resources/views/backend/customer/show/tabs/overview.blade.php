@@ -27,6 +27,11 @@
             </tr>
 
             <tr>
+                <th>{{ __('labels.backend.customers.tabs.content.overview.credit_limit') }}</th>
+                <td>PHP {{ number_format($customer->credit_limit, 2) }}</td>
+            </tr>
+
+            <tr>
                 <th>{{ __('labels.backend.customers.tabs.content.overview.created_at') }}</th>
                 <td>{{ $customer->created_at->diffForHumans() }}</td>
             </tr>

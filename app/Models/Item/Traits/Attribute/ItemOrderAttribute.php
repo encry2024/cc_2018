@@ -14,7 +14,7 @@ trait ItemOrderAttribute
     public function getDeleteButtonAttribute()
     {
         if ($this->id) {
-            return '<a href="'.route('admin.item_order.destroy', $this).'"
+            return '<a href="'.route('admin.item_cart.destroy', $this).'"
                  data-method="delete"
                  data-trans-button-cancel="'.__('buttons.general.cancel').'"
                  data-trans-button-confirm="'.__('buttons.general.crud.delete').'"

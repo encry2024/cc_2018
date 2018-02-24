@@ -8,7 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Auth\User;
 use App\Models\Supplier\Supplier;
 use App\Models\Item\Item;
-use App\Models\Item\ItemOrder;
+use App\Models\Item\ItemCart;
 
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -83,7 +83,7 @@ class SupplierRepository extends BaseRepository
      */
     public function getItemOrderPaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc', $supplier_id) : LengthAwarePaginator
     {
-        return ItemOrder::whereSupplierId($supplier_id)
+        return ItemCart::whereSupplierId($supplier_id)
             ->with(['item', 'supplier'])
             ->orderBy($orderBy, $sort)
             ->paginate($paged);

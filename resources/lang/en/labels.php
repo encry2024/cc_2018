@@ -84,6 +84,7 @@ return [
             'list'      =>  'Customer\'s List',
             'view'      =>  'View :customer',
             'deleted'   =>  'Deleted Customers',
+            'order'     =>  'Customer Order',
 
             'management'    =>  'Customer Management',
 
@@ -94,6 +95,7 @@ return [
                 'contact_number'    =>  'Contact Number',
                 'address'           =>  'Address',
                 'discount'          =>  'Discount',
+                'credit_limit'      =>  'Credit Limit',
                 'created_at'        =>  'Date Created',
                 'updated_at'        =>  'Date Updated',
                 'deleted_at'        =>  'Date Deleted',
@@ -113,6 +115,7 @@ return [
                         'contact_number'    =>  'Contact Number',
                         'address'           =>  'Address',
                         'discount'          =>  'Discount',
+                        'credit_limit'      =>  'Credit Limit',
                         'created_at'        =>  'Date Created',
                         'updated_at'        =>  'Date Updated',
                         'deleted_at'        =>  'Date Deleted',
@@ -143,6 +146,8 @@ return [
                 'final_weight_type'     =>  'Final Weight Type',
                 'final_weight'          =>  'Final Weight',
                 'quantity'              =>  'Quantity',
+                'stocks'                =>  'Stocks',
+                'total_price'           =>  'Total Price',
                 'created_at'            =>  'Date Created',
                 'updated_at'            =>  'Date Updated',
                 'deleted_at'            =>  'Date Deleted',

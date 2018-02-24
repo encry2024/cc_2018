@@ -10,8 +10,6 @@ Route::group([
     Route::get('supplier/deleted', 'SupplierStatusController@getDeleted')->name('supplier.deleted');
     Route::get('supplier/{supplier}/item/cart', 'SupplierController@showCart')->name('supplier.cart');
 
-    Route::post('supplier/{supplier}/item/confirm', 'SupplierController@confirmCart')->name('supplier.confirm_orders');
-
     Route::resource('supplier', 'SupplierController');
 
     Route::group(['prefix' => 'supplier/{deletedSupplier}'], function () {

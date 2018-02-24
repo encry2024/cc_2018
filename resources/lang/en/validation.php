@@ -128,7 +128,8 @@ return [
                 'email'                 =>  'E-mail',
                 'contact_number'        =>  'Contact Number',
                 'address'               =>  'Address',
-                'discount'              =>  'Discount'
+                'discount'              =>  'Discount',
+                'credit_limit'          =>  'Credit Limit'
             ],
 
             'item'  =>  [

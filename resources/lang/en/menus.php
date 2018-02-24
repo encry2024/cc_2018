@@ -88,6 +88,7 @@ return [
             'supplier'  =>  'Suppliers',
             'item'      =>  'Items',
             'customer'  =>  'Customers',
+            'transaction'   =>  'Transactions',
             'general'   =>  'General',
             'system'    =>  'System',
         ],

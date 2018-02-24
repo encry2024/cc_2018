@@ -2,8 +2,8 @@
 
 namespace App\Models\Supplier\Traits\Relationship;
 
+use App\Models\Cart\Cart;
 use App\Models\Item\Item;
-use App\Models\Item\ItemOrder;
 
 /**
  * Trait SupplierRelationship.
@@ -21,8 +21,8 @@ trait SupplierRelationship
     /**
      * @return mixed
      */
-    public function item_orders()
+    public function carts()
     {
-        return $this->hasMany(ItemOrder::class);
+        return $this->hasMany(Cart::class);
     }
 }

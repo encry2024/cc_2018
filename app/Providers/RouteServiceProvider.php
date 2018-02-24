@@ -6,6 +6,7 @@ use App\Models\Auth\User;
 use App\Models\Supplier\Supplier;
 use App\Models\Item\Item;
 use App\Models\Customer\Customer;
+use App\Models\Transaction\Transaction;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -66,6 +67,13 @@ class RouteServiceProvider extends ServiceProvider
             $customer = new Customer;
 
             return Customer::withTrashed()->where($customer->getRouteKeyName(), $value)->first();
+        });
+
+        # Transaction
+        $this->bind('deletedTransaction', function ($value) {
+            $transaction = new Transaction;
+
+            return Transaction::withTrashed()->where($transaction->getRouteKeyName(), $value)->first();
         });
 
         parent::boot();

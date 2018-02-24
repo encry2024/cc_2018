@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 use App\Models\Item\Item;
-use App\Models\Item\ItemOrder;
+use App\Models\Cart\Cart;
 
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -48,6 +48,20 @@ class ItemRepository extends BaseRepository
      * @return mixed
      */
     public function getActivePaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc') : LengthAwarePaginator
+    {
+        return $this->model
+            ->orderBy($orderBy, $sort)
+            ->paginate($paged);
+    }
+
+    /**
+     * @param int    $paged
+     * @param string $orderBy
+     * @param string $sort
+     *
+     * @return mixed
+     */
+    public function getStocksPaginated($paged = 50, $orderBy = 'created_at', $sort = 'desc') : LengthAwarePaginator
     {
         return $this->model
             ->orderBy($orderBy, $sort)
@@ -171,34 +185,5 @@ class ItemRepository extends BaseRepository
         }
 
         throw new GeneralException(__('exceptions.backend.item.restore_error'));
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return ItemOrder
-     */
-    public function storeOrderedProducts(array $data) : ItemOrder
-    {
-        return DB::transaction(function () use ($data) {
-            $item           = Item::find($data['item_id']);
-            $quantity       = $data['quantity'];
-            $total_price    = $item->selling_price * $quantity;
-
-            $item_order = ItemOrder::create([
-                'supplier_id'           =>  $item->supplier_id,
-                'item_id'               =>  $data['item_id'],
-                'total_price'           =>  $total_price,
-                'quantity'              =>  $quantity
-            ]);
-
-            if ($item_order) {
-                event(new ItemOrderCreated($item_order));
-
-                return $item_order;
-            }
-
-            throw new GeneralException(__('exceptions.backend.item_orders.create_error'));
-        });
     }
 }

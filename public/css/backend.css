@@ -18563,5 +18563,15 @@ label {
 
 .cart-table-hover tbody tr:hover {
   background-color: #e6f6fb;
+  cursor: pointer;
+}
+
+.card-body-order,
+.card-block,
+.card-block {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 0.4rem;
 }
 

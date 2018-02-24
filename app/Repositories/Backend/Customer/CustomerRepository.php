@@ -75,6 +75,7 @@ class CustomerRepository extends BaseRepository
                 'contact_number'    =>  $data['contact_number'],
                 'address'           =>  $data['address'],
                 'discount'          =>  $data['discount'],
+                'credit_limit'      =>  str_replace(',','',$data['credit_limit'])
             ]);
 
             if ($customer) {
@@ -102,6 +103,7 @@ class CustomerRepository extends BaseRepository
                 'contact_number'    =>  $data['contact_number'],
                 'address'           =>  $data['address'],
                 'discount'          =>  $data['discount'],
+                'credit_limit'      =>  str_replace(',','',$data['credit_limit'])
             ]))
 
             {

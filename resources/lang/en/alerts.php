@@ -15,11 +15,11 @@ return [
 
     'backend' => [
         'transactions' =>  [
-            'created'   =>  'Transaction \':transaction\' was successfully created.',
-            'deleted'   =>  'Transaction \':transaction\' was successfully deleted.',
-            'updated'   =>  'Transaction \':transaction\' was successfully updated',
-            'restored'  =>  'Transaction \':transaction\' was successfully restored.',
-            'deleted_permanently'   =>  'Transaction \':transaction\' was successfully deleted permanently.',
+            'created'   =>  'Transaction ID# \':transaction\' was successfully created.',
+            'deleted'   =>  'Transaction ID# \':transaction\' was successfully deleted.',
+            'updated'   =>  'Transaction ID# \':transaction\' was successfully updated',
+            'restored'  =>  'Transaction ID# \':transaction\' was successfully restored.',
+            'deleted_permanently'   =>  'Transaction ID# \':transaction\' was successfully deleted permanently.',
         ],
 
         'customers' =>  [

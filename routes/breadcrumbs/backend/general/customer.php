@@ -17,6 +17,11 @@ Breadcrumbs::register('admin.customer.show', function ($breadcrumbs, $customer) 
     $breadcrumbs->push(__('labels.backend.customers.show', ['customer' => $customer->name]), route('admin.customer.show', $customer));
 });
 
+Breadcrumbs::register('admin.customer.order', function ($breadcrumbs, $customer) {
+    $breadcrumbs->parent('admin.customer.index');
+    $breadcrumbs->push(__('labels.backend.customers.order', ['customer' => $customer->name]), route('admin.customer.order', $customer));
+});
+
 Breadcrumbs::register('admin.customer.edit', function ($breadcrumbs, $customer) {
     $breadcrumbs->parent('admin.customer.index');
     $breadcrumbs->push(__('labels.backend.customers.edit', ['customer' => $customer->name]), route('admin.customer.edit', $customer));

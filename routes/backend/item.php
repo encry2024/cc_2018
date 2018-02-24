@@ -11,7 +11,7 @@ Route::group([
 
     Route::get('item/queues', 'ItemController@getItemQueues')->name('item.queue');
 
-    Route::post('item/store/ordered_products', 'ItemController@storeOrderedProducts')->name('item.store_order');
+    Route::post('item_order/confirmed', 'ItemOrderController@confirmOrders')->name('item_order.confirm_orders');
 
     Route::resource('item', 'ItemController');
     Route::resource('item_order', 'ItemOrderController');

@@ -30,6 +30,10 @@ return [
             'email_error'           => 'That email address belongs to a different customer.',
         ],
 
+        'carts' =>  [
+            'create_error'          =>  'There was a problem adding this item to the cart. Please try again.'
+        ],
+
         'item_orders'  =>  [
             'cant_restore'          => 'This item order is not deleted so it can not be restored.',
             'create_error'          => 'There was a problem creating this item order. Please try again.',

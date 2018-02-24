@@ -33,10 +33,10 @@
                             </thead>
 
                             <tbody>
-                            {{ html()->form('POST', route('admin.supplier.confirm_orders'))->class('form-horizontal')->id('cart_form')->open() }}
+                            {{ html()->form('POST', route('admin.transaction.store'))->class('form-horizontal')->id('cart_form')->open() }}
                             @foreach ($queues as $queue)
                                 <tr>
-                                    <td><input type="checkbox" value="{{ $queue->id }}"></td>
+                                    <td><input type="checkbox" value="{{ $queue->id }}" name="item_order_id[]"></td>
                                     <td>{{ $queue->id }}</td>
                                     <td>{{ $queue->item->name }}</td>
                                     <td>{{ $queue->quantity }} kg</td>
@@ -44,16 +44,13 @@
                                     <td>{{ date('F d, Y - h:i A', strtotime($queue->created_at)) }}</td>
                                 </tr>
                             @endforeach
+                            <button class="btn btn-success" type="submit">Confirm</button>
                             {{ html()->form()->close() }}
                             </tbody>
                         </table>
                     </div>
                 </div><!--col-->
             </div><!--row-->
-
-            <div class="row">
-                <button class="btn btn-success">Confirm</button>
-            </div>
 
             <div class="row">
                 <div class="col-7">

@@ -31,7 +31,7 @@
 
                         <li class="nav-item" style="margin-left: 52rem;">
                             <a class="btn btn-default btn-sm" style="font-size: 17px; color: #536c79;" href="{{ route('admin.supplier.cart', $supplier->id) }}" aria-controls="cart" aria-expanded="true"><i class="fa fa-cart-plus" aria-hidden="true"></i>
-                                <span class="badge badge-info">{{ $supplier->item_orders->count() }}</span></a>
+                                <span class="badge badge-info">{{ $supplier->carts->count() }}</span></a>
                         </li>
                     </ul>
 
@@ -88,7 +88,7 @@
 
                 $.ajax({
                     type: "post",
-                    url: "{{ route('admin.item.store_order') }}",
+                    url: "{{ route('admin.cart.store') }}",
                     data: {
                         _token:         '{{ csrf_token() }}',
                         item_id:        item_id,

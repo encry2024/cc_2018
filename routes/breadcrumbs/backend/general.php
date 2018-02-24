@@ -8,4 +8,4 @@
 require __DIR__.'/general/supplier.php';
 require __DIR__.'/general/item.php';
 require __DIR__.'/general/customer.php';
-require __DIR__.'/general/transaction.php.php';
+require __DIR__.'/general/transaction.php';
