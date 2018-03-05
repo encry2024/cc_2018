@@ -21,9 +21,9 @@ class PermissionRoleTableSeeder extends Seeder
         $this->disableForeignKeys();
 
         // Create Roles
-        $admin = Role::create(['name' => config('access.users.admin_role')]);
-        $executive = Role::create(['name' => 'executive']);
-        $user = Role::create(['name' => config('access.users.default_role')]);
+        $admin      = Role::create(['name' => config('access.users.admin_role')]);
+        $executive  = Role::create(['name' => 'executive']);
+        $user       = Role::create(['name' => config('access.users.default_role')]);
 
         // Create Permissions
         Permission::create(['name' => 'view backend']);
@@ -55,7 +55,30 @@ class PermissionRoleTableSeeder extends Seeder
 
         // ALWAYS GIVE ADMIN ROLE ALL PERMISSIONS
         $admin->givePermissionTo('view backend');
-        $admin->givePermissionTo('manage cart');
+        # Give admin permission to Cart
+        $admin->givePermissionTo('view cart');
+        $admin->givePermissionTo('update cart');
+        # Give admin all permission to Item
+        $admin->givePermissionTo('view item');
+        $admin->givePermissionTo('store item');
+        $admin->givePermissionTo('edit item');
+        $admin->givePermissionTo('restore item');
+        $admin->givePermissionTo('delete item');
+        $admin->givePermissionTo('force delete item');
+        # Give admin all permission to Supplier
+        $admin->givePermissionTo('view supplier');
+        $admin->givePermissionTo('store supplier');
+        $admin->givePermissionTo('edit supplier');
+        $admin->givePermissionTo('restore supplier');
+        $admin->givePermissionTo('delete supplier');
+        $admin->givePermissionTo('force delete supplier');
+        # Give admin all permission to Customer
+        $admin->givePermissionTo('view customer');
+        $admin->givePermissionTo('store customer');
+        $admin->givePermissionTo('edit customer');
+        $admin->givePermissionTo('restore customer');
+        $admin->givePermissionTo('delete customer');
+        $admin->givePermissionTo('force delete customer');
 
         // Assign Permissions to other Roles
         $executive->givePermissionTo('view backend');
