@@ -13,7 +13,7 @@ class UpdateSupplierRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->isAdmin();
+        return $this->user()->can('edit supplier');
     }
 
     /**
