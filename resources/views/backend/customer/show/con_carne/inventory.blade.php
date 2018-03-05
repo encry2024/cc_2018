@@ -13,8 +13,17 @@
 
                     <tbody>
                     @foreach ($items as $item)
-                        <tr class="{{ $item->stocks ? '' : 'bg-danger' }} item-order-button-row"
-                            @if($item->stocks == 0)
+                        <tr class="
+                            @if ($item->final_weight <= $item->critical_stocks_level)
+                                bg-warning
+                            @elseif ($item->final_weight == 0)
+                                bg-danger
+                            @else
+                                bg-success
+                            @endif
+
+                            item-order-button-row"
+                            @if($item->final_weight == 0)
                                 onclick="restockFunction('{{ route('admin.item.show', $item->id) }}');"
                             @else
                                 onclick="orderItem({{ $item->id }}, '{{ $item->name }}', '{{ $item->stocks }} kg', '{{ $item->supplier->name }}', 'PHP {{ number_format($item->buying_price, 2) }}');"
@@ -36,10 +45,11 @@
                 <div class="card-body-order" style="height: 20rem;">
                     <table class="table table-bordered table-sm">
                         <thead>
-                            <th style="background-color: #666; color: white; width: 30%;">Item</th>
+                            <th style="background-color: #666; color: white; width: 28%;">Item</th>
                             <th style="background-color: #666; color: white; width: 13%;">Price</th>
                             <th style="background-color: #666; color: white; width: 13%;">Quantity</th>
                             <th style="background-color: #666; color: white; width: 13%;">Cost</th>
+                            <th style="background-color: #666; color: white; width: 15%;">Delivery Date</th>
                         </thead>
                         <tbody>
                         </tbody>
