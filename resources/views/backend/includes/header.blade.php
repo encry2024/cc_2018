@@ -11,7 +11,7 @@
 
     <ul class="nav navbar-nav ml-auto">
         <li class="nav-item notifications-menu">
-            <a class="nav-link" data-toggle="dropdown" href="#" aria-controls="cart" aria-expanded="true" id="cart-btn"><i class="fa fa-cart-plus" aria-hidden="true"></i><span class="badge badge-pill badge-info" id="cart_queues_count"></span></a>
+            <a class="nav-link" data-toggle="dropdown" href="#" aria-controls="cart" aria-expanded="true" id="cart-btn"><i class="fa fa-cart-plus" aria-hidden="true"></i><span class="badge badge-pill badge-danger" id="cart_queues_count"></span></a>
 
             <ul class="dropdown-menu dropdown-menu-right" style="font-size: 12px;">
                 <div id="cart-container"></div>
