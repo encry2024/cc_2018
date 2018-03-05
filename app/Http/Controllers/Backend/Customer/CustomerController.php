@@ -131,7 +131,7 @@ class CustomerController extends Controller
         return redirect()->route('admin.customer.deleted')->withFlashSuccess(__('alerts.backend.customers.deleted', ['customer' => $customer->name]));
     }
 
-    public function order(Customer $customer, ManageAllRequestsForAdmin $request)
+    public function order(Customer $customer, ManageSupplierRequest $request)
     {
         return view('backend.customer.order')->withCustomer($customer)->withItems($this->itemRepository->getStocksPaginated());
     }
