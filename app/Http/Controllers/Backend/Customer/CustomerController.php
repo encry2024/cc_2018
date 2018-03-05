@@ -3,22 +3,18 @@
 namespace App\Http\Controllers\Backend\Customer;
 
 use App\Http\Controllers\Controller;
-
 # Events
 use App\Events\Backend\Customer\CustomerDeleted;
-
 # Models
 use App\Models\Customer\Customer;
 use App\Models\Supplier\Supplier;
-
 # Requests
 use Illuminate\Http\Request;
+use App\Http\Requests\Backend\Supplier\ManageSupplierRequest;
 use App\Http\Requests\Backend\Customer\ManageCustomerRequest;
 use App\Http\Requests\Backend\Customer\StoreCustomerRequest;
 use App\Http\Requests\Backend\Customer\UpdateCustomerRequest;
-use App\Http\Requests\Backend\Auth\General\ManageAllRequestsForAdmin;
-use App\Http\Requests\Backend\Supplier\ManageSupplierRequest;
-
+use App\Http\Requests\Backend\Customer\DeleteCustomerRequest;
 # Repositories
 use App\Repositories\Backend\Customer\CustomerRepository;
 use App\Repositories\Backend\Item\ItemRepository;
