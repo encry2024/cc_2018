@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Item\ManageItemRequest;
 use App\Http\Requests\Backend\Item\StoreItemRequest;
 use App\Http\Requests\Backend\Item\UpdateItemRequest;
+use App\Http\Requests\Backend\Item\DeleteItemRequest;
 use App\Repositories\Backend\Item\ItemRepository;
 use App\Events\Backend\Item\ItemDeleted;
 use App\Models\Supplier\Supplier;
