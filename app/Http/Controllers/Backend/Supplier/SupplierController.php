@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Supplier\ManageSupplierRequest;
 use App\Http\Requests\Backend\Supplier\StoreSupplierRequest;
 use App\Http\Requests\Backend\Supplier\UpdateSupplierRequest;
-
+use App\Http\Requests\Backend\Supplier\DeleteSupplierRequest;
 use App\Repositories\Backend\Supplier\SupplierRepository;
 use App\Repositories\Backend\Cart\CartRepository;
 
