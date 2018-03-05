@@ -6,7 +6,8 @@ use App\Models\Item\Item;
 use App\Http\Controllers\Controller;
 use App\Repositories\Backend\Item\ItemRepository;
 use App\Http\Requests\Backend\Item\ManageItemRequest;
-
+use App\Http\Requests\Backend\Item\RestoreItemRequest;
+use App\Http\Requests\Backend\Item\ForceDeleteItemRequest;
 /**
  * Class ItemStatusController.
  */
@@ -37,13 +38,13 @@ class ItemStatusController extends Controller
     }
 
     /**
-     * @param Item              $deletedItem
-     * @param ManageItemRequest $manageItemRequest
+     * @param Item                   $deletedItem
+     * @param ForceDeleteItemRequest $request
      *
      * @return mixed
      * @throws \App\Exceptions\GeneralException
      */
-    public function delete(Item $deletedItem, ManageItemRequest $manageItemRequest)
+    public function delete(Item $deletedItem, ForceDeleteItemRequest $request)
     {
         $item_name = $deletedItem->name;
 
@@ -53,13 +54,13 @@ class ItemStatusController extends Controller
     }
 
     /**
-     * @param Item              $deletedItem
-     * @param ManageItemRequest $manageItemRequest
+     * @param Item               $deletedItem
+     * @param RestoreItemRequest $request
      *
      * @return mixed
      * @throws \App\Exceptions\GeneralException
      */
-    public function restore(Item $deletedItem, ManageItemRequest $manageItemRequest)
+    public function restore(Item $deletedItem, RestoreItemRequest $request)
     {
         $this->itemRepository->restore($deletedItem);
 
