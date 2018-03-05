@@ -6,7 +6,8 @@ use App\Models\Customer\Customer;
 use App\Http\Controllers\Controller;
 use App\Repositories\Backend\Customer\CustomerRepository;
 use App\Http\Requests\Backend\Customer\ManageCustomerRequest;
-
+use App\Http\Requests\Backend\Customer\ForceDeleteCustomerRequest;
+use App\Http\Requests\Backend\Customer\RestoreCustomerRequest;
 /**
  * Class CustomerStatusController.
  */
@@ -37,13 +38,13 @@ class CustomerStatusController extends Controller
     }
 
     /**
-     * @param Customer              $deletedCustomer
-     * @param ManageCustomerRequest $manageCustomerRequest
+     * @param Customer                   $deletedCustomer
+     * @param ForceDeleteCustomerRequest $request
      *
      * @return mixed
      * @throws \App\Exceptions\GeneralException
      */
-    public function delete(Customer $deletedCustomer, ManageCustomerRequest $manageCustomerRequest)
+    public function delete(Customer $deletedCustomer, ForceDeleteCustomerRequest $request)
     {
         $customer_name = $deletedCustomer->name;
 
@@ -53,13 +54,13 @@ class CustomerStatusController extends Controller
     }
 
     /**
-     * @param Customer              $deletedCustomer
-     * @param ManageCustomerRequest $manageCustomerRequest
+     * @param Customer               $deletedCustomer
+     * @param RestoreCustomerRequest $request
      *
      * @return mixed
      * @throws \App\Exceptions\GeneralException
      */
-    public function restore(Customer $deletedCustomer, ManageCustomerRequest $manageCustomerRequest)
+    public function restore(Customer $deletedCustomer, RestoreCustomerRequest $request)
     {
         $this->customerRepository->restore($deletedCustomer);
 
