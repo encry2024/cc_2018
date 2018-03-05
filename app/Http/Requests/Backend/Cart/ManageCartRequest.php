@@ -13,7 +13,7 @@ class ManageCartRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->can('manage cart');
+        return $this->user()->can('update cart');
     }
 
     /**
