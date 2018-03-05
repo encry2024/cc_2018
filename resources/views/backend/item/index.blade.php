@@ -32,8 +32,7 @@
                                     <th>{{ __('labels.backend.items.table.supplier') }}</th>
                                     <th>{{ __('labels.backend.items.table.selling_price') }}</th>
                                     <th>{{ __('labels.backend.items.table.buying_price') }}</th>
-                                    <th>{{ __('labels.backend.items.table.created_at') }}</th>
-                                    <th>{{ __('labels.backend.items.table.updated_at') }}</th>
+                                    <th>Remaining {{ __('labels.backend.items.table.stocks') }}</th>
                                     <th>{{ __('labels.general.actions') }}</th>
                                 </tr>
                             </thead>
@@ -45,8 +44,7 @@
                                     <td>{{ $item->supplier->name }}</td>
                                     <td>PHP {{ number_format($item->selling_price, 2) }}</td>
                                     <td>PHP {{ number_format($item->buying_price, 2) }}</td>
-                                    <td>{{ $item->created_at->diffForHumans() }}</td>
-                                    <td>{{ $item->updated_at->diffForHumans() }}</td>
+                                    <td>{{ $item->final_weight }} {{ $item->final_weight_type }}</td>
                                     <td>{!! $item->action_buttons !!}</td>
                                 </tr>
                             @endforeach

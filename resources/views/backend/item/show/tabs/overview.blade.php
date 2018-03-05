@@ -17,8 +17,8 @@
             </tr>
 
             <tr>
-                <th>{{ __('labels.backend.items.tabs.content.overview.final_weight') }}</th>
-                <td>{{ $item->final_weight }} {{ $item->final_weight_type }}</td>
+                <th>{{ __('labels.backend.items.tabs.content.overview.final_weight') }}/Remaining {{ __('labels.backend.items.tabs.content.overview.stocks') }}</th>
+                <td>{{ $item->final_weight }} {{ $item->final_weight_type }}  | Critical Level: {{ $item->critical_stocks_level }} {{ $item->final_weight_type }}</td>
             </tr>
 
             <tr>
@@ -33,12 +33,12 @@
 
             <tr>
                 <th>{{ __('labels.backend.items.tabs.content.overview.created_at') }}</th>
-                <td>{{ $item->created_at->diffForHumans() }}</td>
+                <td>{{ date('F d, Y (h:i A)', strtotime($item->created_at)) }}</td>
             </tr>
 
             <tr>
                 <th>{{ __('labels.backend.items.tabs.content.overview.updated_at') }}</th>
-                <td>{{ $item->updated_at->diffForHumans() }}</td>
+                <td>{{ date('F d, Y (h:i A)', strtotime($item->updated_at)) }}</td>
             </tr>
         </table>
     </div>

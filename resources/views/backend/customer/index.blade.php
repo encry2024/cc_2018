@@ -1,6 +1,6 @@
-@extends ('backend.layouts.app')
+@extends('backend.layouts.app')
 
-@section ('title', app_name() . ' | ' . __('labels.backend.customers.management'))
+@section('title', app_name() . ' | ' . __('labels.backend.customers.management'))
 
 @section('breadcrumb-links')
     @include('backend.customer.includes.breadcrumb-links')
@@ -43,8 +43,8 @@
                                     <td>{{ $customer->name }}</td>
                                     <td>{{ $customer->email }}</td>
                                     <td>{{ $customer->contact_number }}</td>
-                                    <td>{{ $customer->created_at->diffForHumans() }}</td>
-                                    <td>{{ $customer->updated_at->diffForHumans() }}</td>
+                                    <td>{{ date('F d, Y (h:i A)', strtotime($customer->created_at)) }}</td>
+                                    <td>{{ date('F d, Y (h:i A)', strtotime($customer->updated_at)) }}</td>
                                     <td>{!! $customer->action_buttons !!}</td>
                                 </tr>
                             @endforeach

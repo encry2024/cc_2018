@@ -4,6 +4,7 @@ namespace App\Models\Supplier\Traits\Relationship;
 
 use App\Models\Cart\Cart;
 use App\Models\Item\Item;
+use App\Models\Transaction\Transaction;
 
 /**
  * Trait SupplierRelationship.
@@ -24,5 +25,10 @@ trait SupplierRelationship
     public function carts()
     {
         return $this->hasMany(Cart::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(transaction::class);
     }
 }

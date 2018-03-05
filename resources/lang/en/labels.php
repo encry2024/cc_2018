@@ -1,4 +1,4 @@
-<!----><?php
+<?php
 
 return [
 
@@ -33,6 +33,20 @@ return [
     ],
 
     'backend' => [
+        'carts' => [
+            'management'    =>  'Item Cart',
+            'supplier'      =>  'Supplier',
+
+            'table' =>  [
+                'id'            =>  'Cart ID',
+                'item'          =>  'Item Name',
+                'quantity'      =>  'Quantity',
+                'supplier'      =>  'Supplier Name',
+                'status'        =>  'Status',
+                'date_ordered'  =>  'Date Ordered'
+            ]
+        ],
+
         'transactions'  =>  [
             'edit'      =>  'Edit :transaction',
             'list'      =>  'Transaction\'s List',
@@ -147,6 +161,7 @@ return [
                 'final_weight'          =>  'Final Weight',
                 'quantity'              =>  'Quantity',
                 'stocks'                =>  'Stocks',
+                'critical_stocks_level' =>  'Critical Stocks Level',
                 'total_price'           =>  'Total Price',
                 'created_at'            =>  'Date Created',
                 'updated_at'            =>  'Date Updated',
@@ -170,6 +185,8 @@ return [
                         'initial_weight_type'   =>  'Initial Weight Type',
                         'final_weight'          =>  'Final Weight',
                         'final_weight_type'     =>  'Final Weight Type',
+                        'stocks'                =>  'Stocks',
+                        'critical_stocks_level' =>  'Critical Stocks Level',
                         'created_at'            =>  'Date Created',
                         'updated_at'            =>  'Date Updated',
                         'deleted_at'            =>  'Date Deleted',
@@ -212,7 +229,8 @@ return [
                 'titles'    =>  [
                     'overview'  =>  'Overview',
                     'products'  =>  'Supplier Products',
-                    'cart'      =>  'Product Cart'
+                    'cart'      =>  'Product Cart',
+                    'transaction'   =>  'Transaction Records',
                 ],
 
                 'content'   =>  [

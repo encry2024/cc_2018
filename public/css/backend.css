@@ -18528,8 +18528,13 @@ label {
 
 .btn-danger {
   color: #fff !important;
-  background-color: #f86c6b;
-  border-color: #f86c6b;
+  background-color: #c00000;
+  border-color: #c00000;
+}
+
+.bg-danger {
+  background-color: #c00000;
+  border-color: #740000;
 }
 
 .btn-info {
@@ -18573,5 +18578,22 @@ label {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   padding: 0.4rem;
+}
+
+.cart-footer {
+  display: block;
+  width: 100%;
+  padding: 0.20rem 0.5rem;
+  clear: both;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #e7e7e7;
+  border-top: 1px solid #acacac;
+}
+
+a:hover {
+  color: #167495;
+  text-decoration: none;
 }
 

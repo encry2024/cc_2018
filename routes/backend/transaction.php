@@ -12,7 +12,7 @@ Route::group([
     Route::post('transaction/store/ordered_products', 'TransactionController@storeOrderedProducts')->name('transaction.store_order');
 
     Route::resource('transaction', 'TransactionController');
-    Route::resource('item_transaction', 'TransactionOrderController');
+    // Route::resource('item_transaction', 'TransactionOrderController');
 
     Route::group(['prefix' => 'transaction/{deletedTransaction}'], function () {
         Route::get('delete', 'TransactionStatusController@delete')->name('transaction.delete-permanently');

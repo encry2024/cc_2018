@@ -95,6 +95,21 @@
                         </div><!--col-->
                     </div><!--form-group-->
 
+                    <div class="form-group row">
+                        {{ html()->label(__('validation.attributes.backend.customer.credit_limit'))
+                        ->class('col-md-2 form-control-label')
+                        ->for('credit_limit') }}
+
+                        <div class="input-group col-md-10">
+                            <span class="input-group-prepend input-group-text">PHP</span>
+                            {{ html()->text('credit_limit')
+                                ->class('form-control')
+                                ->placeholder(__('validation.attributes.backend.customer.credit_limit'))
+                                ->attribute('maxlength', 191)
+                                ->required() }}
+                        </div><!--col-->
+                    </div><!--form-group-->
+
                 </div><!--col-->
             </div><!--row-->
         </div><!--card-body-->

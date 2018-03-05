@@ -16,6 +16,7 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
+            $table->integer('supplier_id')->unsigned();
             $table->string('status')->default('PENDING');
             $table->timestamps();
             $table->softDeletes();

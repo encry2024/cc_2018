@@ -2,6 +2,7 @@
 
 namespace App\Models\Item\Traits\Attribute;
 
+use Illuminate\Support\Facades\Route;
 /**
  * Trait ItemAttribute.
  */
@@ -10,6 +11,11 @@ trait ItemAttribute
     /**
      * @return string
      */
+    public function getRestockButtonAttribute()
+    {
+        return '<a href="'.route('admin.supplier.show', $this->supplier_id).'" class="btn btn-dark"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Re-stock"></i></a>';
+    }
+
     public function getShowButtonAttribute()
     {
         return '<a href="'.route('admin.item.show', $this).'" class="btn btn-info"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="'.__('buttons.general.crud.view').'"></i></a>';
@@ -73,6 +79,16 @@ trait ItemAttribute
 				  '.$this->restore_button.'
 				  '.$this->delete_permanently_button.'
 				</div>';
+        }
+
+        if(Route::currentRouteName('admin.item*')) {
+            return '
+            <div class="btn-group btn-group-sm" role="group" aria-label="Item Actions">
+            '.$this->restock_button.'
+            '.$this->show_button.'
+            '.$this->edit_button.'
+            '.$this->delete_button.'
+            </div>';
         }
 
         return '

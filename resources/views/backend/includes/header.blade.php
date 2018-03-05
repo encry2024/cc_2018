@@ -10,9 +10,15 @@
     </ul>
 
     <ul class="nav navbar-nav ml-auto">
-        <li class="nav-item d-md-down-none">
-            <a class="nav-link" href="#"><i class="icon-bell"></i><span class="badge badge-pill badge-info">0</span></a>
+        <li class="nav-item notifications-menu">
+            <a class="nav-link" data-toggle="dropdown" href="#" aria-controls="cart" aria-expanded="true" id="cart-btn"><i class="fa fa-cart-plus" aria-hidden="true"></i><span class="badge badge-pill badge-info" id="cart_queues_count"></span></a>
+
+            <ul class="dropdown-menu dropdown-menu-right" style="font-size: 12px;">
+                <div id="cart-container"></div>
+                <a class="cart-footer" href="{{ route('admin.cart.index') }}">View My Cart</a>
+            </ul>
         </li>
+
         <li class="nav-item d-md-down-none">
             <a class="nav-link" href="#"><i class="icon-list"></i></a>
         </li>

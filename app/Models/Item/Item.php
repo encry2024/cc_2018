@@ -22,7 +22,9 @@ class Item extends Model
         'initial_weight',
         'initial_weight_type',
         'final_weight',
-        'final_weight_type'
+        'final_weight_type',
+        'stocks',
+        'critical_stocks_level'
     ];
 
     protected $dates = ['deleted_at'];

@@ -14,6 +14,13 @@ return [
     */
 
     'backend' => [
+        'carts'  =>  [
+            'title'     =>  'Item Cart',
+
+            'all'       =>  'Item Cart',
+            'main'      =>  'Cart'
+        ],
+
         'transactions'  =>  [
             'title'     =>  'Transaction Management',
 

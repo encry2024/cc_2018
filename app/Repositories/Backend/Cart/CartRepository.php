@@ -13,6 +13,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 use App\Models\Cart\Cart;
 use App\Models\Item\Item;
+use App\Models\Supplier\Supplier;
 
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -20,7 +21,9 @@ use App\Repositories\BaseRepository;
 use App\Events\Backend\Cart\CartCreated;
 use App\Events\Backend\Cart\CartUpdated;
 use App\Events\Backend\Cart\CartRestored;
+use App\Events\Backend\Cart\CartDeleted;
 use App\Events\Backend\Cart\CartPermanentlyDeleted;
+
 
 /**
  * Class CartRepository.
@@ -40,14 +43,25 @@ class CartRepository extends BaseRepository
      * @param string $orderBy
      * @param string $sort
      * @param string $status
+     * @param string supplier
      *
      * @return mixed
      */
-    public function getQueuesPaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc', $status = 'QUEUE', $supplier_id) : LengthAwarePaginator
+    public function getQueuesPaginated($paged = 25, $orderBy = 'created_at', $sort = 'desc', $status = null, $supplier = null) : LengthAwarePaginator
     {
-        return $this->model->whereSupplierId($supplier_id)
+        if (! is_null($supplier)) {
+            $supplier_id = Supplier::where('name', $supplier)->first();
+
+            return $this->model
+                ->with(['item', 'supplier'])
+                ->whereStatus($status)
+                ->whereSupplierId($supplier_id->id)
+                ->orderBy($orderBy, $sort)
+                ->paginate($paged);
+        }
+
+        return $this->model
             ->with(['item', 'supplier'])
-            ->whereStatus($status)
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }
@@ -81,6 +95,31 @@ class CartRepository extends BaseRepository
             }
 
             throw new GeneralException(__('exceptions.backend.carts.create_error'));
+        });
+    }
+
+    public function update(Cart $cart) : Cart
+    {
+        return DB::transaction(function () use ($cart) {
+            if ($cart->status == "QUEUE") {
+                if ($cart->update(['status' => 'REQUESTED'])) {
+                    return $cart;
+                }
+            } elseif ($cart->status == "REQUESTED") {
+                if ($cart->update(['status' => 'RECEIVED'])) {
+                    # Item's final weight as stocks
+                    $item_stocks    = $cart->item->final_weight;
+                    # Stocks from Carts table
+                    $ordered_stocks = $cart->quantity;
+                    # Total of Item Stocks + Ordered Stocks
+                    $total_stocks   = $item_stocks + $ordered_stocks;
+                    
+                    if ($cart->item->update(['final_weight' => $total_stocks])) {
+                        return $cart;
+                    }
+                }
+            }
+            throw new GeneralException(__('exceptions.backend.items.update_error'));
         });
     }
 }

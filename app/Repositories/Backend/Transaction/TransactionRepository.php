@@ -93,7 +93,8 @@ class TransactionRepository extends BaseRepository
     {
         return DB::transaction(function () use ($data) {
             $transaction = parent::create([
-                'user_id'      =>  auth()->id()
+                'user_id'      =>  auth()->id(),
+                'supplier_id'  =>  $data['supplier_id']
             ]);
 
             if ($transaction) {
@@ -124,14 +125,7 @@ class TransactionRepository extends BaseRepository
     {
         return DB::transaction(function () use ($transaction, $data) {
             if ($transaction->update([
-                'supplier_id'           =>  $data['supplier'],
-                'name'                  =>  strtoupper($data['name']),
-                'selling_price'         =>  str_replace(',','',$data['selling_price']),
-                'buying_price'          =>  str_replace(',','',$data['buying_price']),
-                'initial_weight'        =>  str_replace(',','',$data['initial_weight']),
-                'initial_weight_type'   =>  'kg',
-                'final_weight'          =>  str_replace(',','',$data['final_weight']),
-                'final_weight_type'     =>  'kg'
+                'supplier_id'  =>  $data['supplier_id']
             ]))
 
             {

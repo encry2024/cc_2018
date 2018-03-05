@@ -28,7 +28,7 @@
                         <div class="form-group row">
                             <div class="input-group col-sm-10">
                                 <span class="input-group-prepend input-group-text">kg</span>
-                                <input type="number" name="item_quantity" class="form-control requested-quantity" min="0" value="0">
+                                <input type="number" name="item_quantity" class="form-control form-control-sm requested-quantity" min="0" value="0">
                             </div><!--col-->
                         </div><!--form-group-->
                     </td>

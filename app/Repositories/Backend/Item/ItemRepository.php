@@ -99,7 +99,8 @@ class ItemRepository extends BaseRepository
                 'initial_weight'        =>  str_replace(',','',$data['initial_weight']),
                 'initial_weight_type'   =>  'kg',
                 'final_weight'          =>  str_replace(',','',$data['final_weight']),
-                'final_weight_type'     =>  'kg'
+                'final_weight_type'     =>  'kg',
+                'critical_stocks_level' =>  $data['critical_stocks_level']
             ]);
 
             if ($item) {
@@ -129,7 +130,8 @@ class ItemRepository extends BaseRepository
                 'initial_weight'        =>  str_replace(',','',$data['initial_weight']),
                 'initial_weight_type'   =>  'kg',
                 'final_weight'          =>  str_replace(',','',$data['final_weight']),
-                'final_weight_type'     =>  'kg'
+                'final_weight_type'     =>  'kg',
+                'critical_stocks_level' =>  $data['critical_stocks_level']
             ]))
 
             {

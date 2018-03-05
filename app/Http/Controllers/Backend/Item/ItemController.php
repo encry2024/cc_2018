@@ -60,7 +60,8 @@ class ItemController extends Controller
             'selling_price',
             'buying_price',
             'initial_weight',
-            'final_weight'
+            'final_weight',
+            'critical_stocks_level'
         ));
 
         return redirect()->route('admin.item.index')->withFlashSuccess(__('alerts.backend.items.created', ['item' => strtoupper($storeItemRequest->name)]));
@@ -105,7 +106,8 @@ class ItemController extends Controller
             'selling_price',
             'buying_price',
             'initial_weight',
-            'final_weight'
+            'final_weight',
+            'critical_stocks_level'
         ));
 
         return redirect()->route('admin.item.index')->withFlashSuccess(__('alerts.backend.items.created', ['item' => $item->name]));

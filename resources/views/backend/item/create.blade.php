@@ -9,6 +9,11 @@
 @section('content')
 {{ html()->form('POST', route('admin.item.store'))->class('form-horizontal')->open() }}
     <div class="card">
+    
+        <div class="alert alert-info" role="alert">
+            <i class="fa fa-info-circle"></i> The <strong>Final Weight</strong> will be the remaining stocks of the item after it is created.
+        </div>
+
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-5">
@@ -108,6 +113,16 @@
                                 ->placeholder(__('validation.attributes.backend.item.final_weight'))
                                 ->attribute('maxlength', 191)
                                 ->required() }}
+                                <span class="input-group-prepend">
+                                {{
+                                    html()->text('critical_stocks_level')
+                                    ->class('form-control')
+                                    ->placeholder(__('validation.attributes.backend.item.critical_stocks_level'))
+                                    ->attribute('maxlength', 191)
+                                    ->required()
+                                    ->autofocus()
+                                }}
+                            </span>
                         </div><!--col-->
                     </div><!--form-group-->
 

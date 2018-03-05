@@ -45,8 +45,8 @@
                                     <td>{{ $supplier->full_name }}</td>
                                     <td>{{ $supplier->email }}</td>
                                     <td>{{ $supplier->mobile_number }}</td>
-                                    <td>{{ $supplier->created_at->diffForHumans() }}</td>
-                                    <td>{{ $supplier->updated_at->diffForHumans() }}</td>
+                                    <td>{{ date('F d, Y (h:i A)', strtotime($supplier->created_at)) }}</td>
+                                    <td>{{ date('F d, Y (h:i A)', strtotime($supplier->updated_at)) }}</td>
                                     <td>{!! $supplier->action_buttons !!}</td>
                                 </tr>
                             @endforeach

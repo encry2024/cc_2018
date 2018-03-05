@@ -59,7 +59,7 @@ trait CustomerAttribute
      */
     public function getDeletePermanentlyButtonAttribute()
     {
-        return '<a href="'.route('admin.customer.delete-permanently', $this).'" name="confirm_customer" class="btn btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Permanently"></i></a> ';
+        return '<a href="'.route('admin.customer.delete-permanently', $this).'" name="confirm_item" class="btn btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Permanently"></i></a> ';
     }
 
     /**
@@ -67,7 +67,7 @@ trait CustomerAttribute
      */
     public function getRestoreButtonAttribute()
     {
-        return '<a href="'.route('admin.customer.restore', $this).'" name="confirm_customer" class="btn btn-info"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Restore Customer"></i></a> ';
+        return '<a href="'.route('admin.customer.restore', $this).'" name="confirm_item" class="btn btn-info"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Restore Customer"></i></a> ';
     }
 
     /**

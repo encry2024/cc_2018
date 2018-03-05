@@ -33,7 +33,7 @@
         </script>
     </head>
 
-    <body class="{{ config('backend.body_classes') }}">
+    <body class="{{ config('backend.body_classes') }}" onload="get_cart_queues();">
         @include('backend.includes.header')
 
         <div class="app-body">
@@ -145,11 +145,54 @@
         {!! script(mix('js/backend.js')) !!}
         @stack('after-scripts')
         <script>
+            const cart_container = $("#cart-container");
+
+            function get_cart_queues()
+            {
+                $.ajax({
+                    type: 'GET',
+                    url:  "{{ route('admin.supplier.queues') }}",
+                    dataType: 'JSON',
+                    success: function(data) {
+                        $("#cart_queues_count").text(data);
+                    }
+                })
+            }
+
+            $("#cart-btn").click(function() {
+                $.ajax({
+                    type: 'GET',
+                    url:  "{{ route('admin.cart.queues') }}",
+                    dataType: 'JSON',
+                    success: function(data) {
+                        let url                      = '';
+                        let notif_supplier_container = '';
+
+                        cart_container.find('a').remove();
+
+                        for(let i=0; i < data.length; i++) {
+                            const supplier_name                 = data[i].name;
+                            const item_id                       = data[i]['id'];
+                            const item_queued_item_per_supplier = data[i]['queued_item_per_supplier'];
+
+                            url = "{{ URL::to('/') }}/admin/cart?name=:supplier_name&status=QUEUE";
+                            url = url.replace(':supplier_name', supplier_name);
+
+                            notif_supplier_container += "<a class='dropdown-item' href='"+ url +"'>";
+                            notif_supplier_container += "You have <strong> "+item_queued_item_per_supplier+" queued item(s)</strong>";
+                            notif_supplier_container += " for <strong>"+ supplier_name +"</strong></a>";
+                        }
+
+                        cart_container.append(notif_supplier_container);
+                    }
+                })
+            })
+
             $("#supplier-dropdown").chosen();
 
-            var numericField = document.getElementsByClassName('numeric-input');
+            const numericField = document.getElementsByClassName('numeric-input');
 
-            for(var elementIndex=0; elementIndex<numericField.length; elementIndex++) {
+            for(let elementIndex=0; elementIndex<numericField.length; elementIndex++) {
                 new Cleave(numericField[elementIndex], {
                     numeral: true,
                     numeralThousandsGroupStyle: 'thousand'

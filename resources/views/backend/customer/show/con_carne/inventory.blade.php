@@ -15,7 +15,7 @@
                     @foreach ($items as $item)
                         <tr class="{{ $item->stocks ? '' : 'bg-danger' }} item-order-button-row"
                             @if($item->stocks == 0)
-                                onclick="restockItem({{ route('admin.item.show', $item->id) }})"
+                                onclick="restockFunction('{{ route('admin.item.show', $item->id) }}');"
                             @else
                                 onclick="orderItem({{ $item->id }}, '{{ $item->name }}', '{{ $item->stocks }} kg', '{{ $item->supplier->name }}', 'PHP {{ number_format($item->buying_price, 2) }}');"
                             @endif

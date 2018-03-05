@@ -135,6 +135,8 @@ return [
             'item'  =>  [
                 'name'                      =>  'Product Name',
                 'supplier'                  =>  'Supplier',
+                'stocks'                    =>  'Stocks',
+                'critical_stocks_level'     =>  'Critical Stocks Level',
                 'selling_price'             =>  'Selling Price',
                 'buying_price'              =>  'Buying Price',
                 'initial_weight'            =>  'Initial Weight',

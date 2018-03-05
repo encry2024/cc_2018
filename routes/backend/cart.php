@@ -6,5 +6,9 @@
 Route::group([
     'namespace'  => 'Cart',
 ], function () {
-    Route::post('cart', 'CartController@store')->name('cart.store');
+
+    Route::resource('cart', 'CartController');
+
+    Route::get('queues', 'CartController@getCartQueues')->name('cart.queues');
+
 });

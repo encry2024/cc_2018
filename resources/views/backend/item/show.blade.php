@@ -39,8 +39,8 @@
             <div class="row">
                 <div class="col">
                     <small class="float-right text-muted">
-                        <strong>{{ __('labels.backend.items.tabs.content.overview.created_at') }}:</strong> {{ date('F d, Y (h:i A)', strtotime($item->created_at)) }},
-                        <strong>{{ __('labels.backend.items.tabs.content.overview.updated_at') }}:</strong> {{ date('F d, Y (h:i A)', strtotime($item->updated_at)) }}
+                        <strong>{{ __('labels.backend.items.tabs.content.overview.created_at') }}:</strong> {{ $item->created_at->diffForHumans() }},
+                        <strong>{{ __('labels.backend.items.tabs.content.overview.updated_at') }}:</strong> {{ $item->updated_at->diffForHumans() }}
                         @if ($item->trashed())
                             <strong>{{ __('labels.backend.items.tabs.content.overview.deleted_at') }}:</strong> {{ date('F d, Y (h:i A)', strtotime($item->deleted_at)) }}
                         @endif

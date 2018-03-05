@@ -1,6 +1,6 @@
 @extends ('backend.layouts.app')
 
-@section ('title', __('labels.backend.items.management') . ' | ' . __('labels.backend.items.edit'))
+@section ('title', __('labels.backend.items.management') . ' | ' . __('labels.backend.items.edit', ['item' => $item->name]))
 
 @section('breadcrumb-links')
     @include('backend.item.includes.breadcrumb-links')
@@ -88,11 +88,13 @@
 
                         <div class="input-group col-md-10">
                             <span class="input-group-prepend input-group-text">kg</span>
-                            {{ html()->text('initial_weight')
+                            {{ 
+                                html()->text('initial_weight')
                                 ->class('form-control')
                                 ->placeholder(__('validation.attributes.backend.item.initial_weight'))
                                 ->attribute('maxlength', 191)
-                                ->required() }}
+                                ->required() 
+                            }}
                         </div><!--col-->
                     </div><!--form-group-->
 
@@ -103,11 +105,21 @@
 
                         <div class="input-group col-md-10">
                             <span class="input-group-prepend input-group-text">kg</span>
-                            {{ html()->text('final_weight')
+                            {{ 
+                                html()->text('final_weight')
                                 ->class('form-control')
                                 ->placeholder(__('validation.attributes.backend.item.final_weight'))
                                 ->attribute('maxlength', 191)
-                                ->required() }}
+                                ->required() 
+                            }}
+                            <span class="input-group-prepend">
+                            {{ 
+                                html()->text('critical_stocks_level')
+                                ->class('form-control')
+                                ->placeholder(__('validation.attributes.backend.item.critical_stocks_level'))
+                                ->attribute('maxlength', 191)
+                                ->required() 
+                            }}
                         </div><!--col-->
                     </div><!--form-group-->
 

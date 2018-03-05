@@ -66,7 +66,13 @@ class SupplierController extends Controller
             'address'
         ));
 
-        return redirect()->route('admin.supplier.index')->withFlashSuccess(__('alerts.backend.suppliers.created', ['supplier' => strtoupper($storeSupplierRequest->name)]));
+        return redirect()->back()
+            ->withFlashSuccess(
+                __(
+                    'alerts.backend.suppliers.created', 
+                    ['supplier' => strtoupper($storeSupplierRequest->name)]
+                )
+            );
     }
 
     /**
@@ -77,7 +83,8 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier, ManageSupplierRequest $manageSupplierRequest)
     {
-        return view('backend.supplier.show')->withSupplier($supplier)
+        return view('backend.supplier.show')
+            ->withSupplier($supplier)
             ->withProducts($this->supplierRepository->getProductsPaginated(25, 'created_at', 'desc', $supplier->id));
     }
 
@@ -112,7 +119,7 @@ class SupplierController extends Controller
             'telephone_number'
         ));
 
-        return redirect()->route('admin.supplier.index')->withFlashSuccess(__('alerts.backend.suppliers.updated', ['supplier' => $supplier->name]));
+        return redirect()->back()->withFlashSuccess(__('alerts.backend.suppliers.updated', ['supplier' => $supplier->name]));
     }
 
     /**
@@ -141,5 +148,10 @@ class SupplierController extends Controller
         return view('backend.supplier.cart')
             ->withSupplier($supplier)
             ->withQueues($this->cartRepository->getQueuesPaginated(25, 'created_at', 'desc', 'QUEUE', $supplier->id));
+    }
+
+    public function getSupplierQueuesCount()
+    {
+        return json_encode(Cart::where('status', 'QUEUE')->groupBy('supplier_id')->get()->count());
     }
 }
