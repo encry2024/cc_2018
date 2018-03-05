@@ -6,7 +6,8 @@ use App\Models\Supplier\Supplier;
 use App\Http\Controllers\Controller;
 use App\Repositories\Backend\Supplier\SupplierRepository;
 use App\Http\Requests\Backend\Supplier\ManageSupplierRequest;
-
+use App\Http\Requests\Backend\Supplier\RestoreSupplierRequest;
+use App\Http\Requests\Backend\Supplier\ForceDeleteSupplierRequest;
 /**
  * Class SupplierStatusController.
  */
@@ -37,13 +38,13 @@ class SupplierStatusController extends Controller
     }
 
     /**
-     * @param Supplier              $deletedSupplier
-     * @param ManageSupplierRequest $manageSupplierRequest
+     * @param Supplier                   $deletedSupplier
+     * @param ForceDeleteSupplierRequest $request
      *
      * @return mixed
      * @throws \App\Exceptions\GeneralException
      */
-    public function delete(Supplier $deletedSupplier, ManageSupplierRequest $manageSupplierRequest)
+    public function delete(Supplier $deletedSupplier, ForceDeleteSupplierRequest $request)
     {
         $this->supplierRepository->forceDelete($deletedSupplier);
 
@@ -51,13 +52,13 @@ class SupplierStatusController extends Controller
     }
 
     /**
-     * @param Supplier              $deletedSupplier
-     * @param ManageSupplierRequest $manageSupplierRequest
+     * @param Supplier               $deletedSupplier
+     * @param RestoreSupplierRequest $request
      *
      * @return mixed
      * @throws \App\Exceptions\GeneralException
      */
-    public function restore(Supplier $deletedSupplier, ManageSupplierRequest $manageSupplierRequest)
+    public function restore(Supplier $deletedSupplier, RestoreSupplierRequest $request)
     {
         $this->supplierRepository->restore($deletedSupplier);
 
