@@ -27,7 +27,31 @@ class PermissionRoleTableSeeder extends Seeder
 
         // Create Permissions
         Permission::create(['name' => 'view backend']);
-        Permission::create(['name' => 'manage cart']);
+        # Create Cart Permission
+        Permission::create(['name' => 'view cart']);
+        Permission::create(['name' => 'update cart']);
+        # Create Item Permission
+        Permission::create(['name' => 'view item']);
+        Permission::create(['name' => 'store item']);
+        Permission::create(['name' => 'edit item']);
+        Permission::create(['name' => 'restore item']);
+        Permission::create(['name' => 'delete item']);
+        Permission::create(['name' => 'force delete item']);
+        # Create Supplier Permission
+        Permission::create(['name' => 'view supplier']);
+        Permission::create(['name' => 'store supplier']);
+        Permission::create(['name' => 'edit supplier']);
+        Permission::create(['name' => 'restore supplier']);
+        Permission::create(['name' => 'delete supplier']);
+        Permission::create(['name' => 'force delete supplier']);
+        # Create Customer Permission
+        Permission::create(['name' => 'view customer']);
+        Permission::create(['name' => 'store customer']);
+        Permission::create(['name' => 'edit customer']);
+        Permission::create(['name' => 'restore customer']);
+        Permission::create(['name' => 'delete customer']);
+        Permission::create(['name' => 'force delete customer']);
+
 
         // ALWAYS GIVE ADMIN ROLE ALL PERMISSIONS
         $admin->givePermissionTo('view backend');
