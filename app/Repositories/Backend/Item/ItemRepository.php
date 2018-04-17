@@ -55,6 +55,30 @@ class ItemRepository extends BaseRepository
     }
 
     /**
+     * Get Available Items
+     *
+     * @return mixed
+     */
+    public function getAvailableItems()
+    {
+        return $this->model
+            ->where('final_weight', '!=', 0)
+            ->get();
+    }
+
+    /**
+     * Get Selected Item
+     *
+     * @param int $item_id
+     *
+     * @return mixed
+     */
+    public function getSelectedItem($item_id)
+    {
+        return json_encode($this->model->find($item_id));
+    }
+
+    /**
      * @param int    $paged
      * @param string $orderBy
      * @param string $sort
@@ -104,7 +128,7 @@ class ItemRepository extends BaseRepository
             ]);
 
             if ($item) {
-                event(new ItemCreated($item));
+                event(new ItemCreated($item->name));
 
                 return $item;
             }
