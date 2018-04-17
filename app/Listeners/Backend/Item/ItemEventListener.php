@@ -12,7 +12,7 @@ class ItemEventListener
      */
     public function onCreated($event)
     {
-        \Log::info('Item Created');
+        \Log::info('Item "'. $event->item .'" Created');
     }
 
     /**
