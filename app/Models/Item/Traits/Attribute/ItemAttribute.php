@@ -4,10 +4,15 @@ namespace App\Models\Item\Traits\Attribute;
 
 use Illuminate\Support\Facades\Route;
 /**
- * Trait ItemAttribute.
- */
+* Trait ItemAttribute.
+*/
 trait ItemAttribute
 {
+    public function getStocksAttribute()
+    {
+        return $this->final_weight . ' ' . $this->final_weight_type;
+    }
+
     /**
      * @return string
      */
@@ -36,17 +41,17 @@ trait ItemAttribute
     {
         if ($this->id) {
             return '<a href="'.route('admin.item.destroy', $this).'"
-                 data-method="delete"
-                 data-trans-button-cancel="'.__('buttons.general.cancel').'"
-                 data-trans-button-confirm="'.__('buttons.general.crud.delete').'"
-                 data-trans-title="'.__('strings.backend.general.are_you_sure').'"
-                 class="btn btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="'.__('buttons.general.crud.delete').'"></i></a> ';
+                data-method="delete"
+                data-trans-button-cancel="'.__('buttons.general.cancel').'"
+                data-trans-button-confirm="'.__('buttons.general.crud.delete').'"
+                data-trans-title="'.__('strings.backend.general.are_you_sure').'"
+                class="btn btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="'.__('buttons.general.crud.delete').'"></i></a> ';
         }
     }
 
     /**
      * @return string
-     */
+    */
     public function getDeletePermanentlyButtonAttribute()
     {
         return '<a href="'.route('admin.item.delete-permanently', $this).'" name="confirm_item" class="btn btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Permanently"></i></a> ';
@@ -54,18 +59,27 @@ trait ItemAttribute
 
     /**
      * @return string
-     */
+    */
     public function getRestoreButtonAttribute()
     {
         return '<a href="'.route('admin.item.restore', $this).'" name="confirm_item" class="btn btn-info"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Restore Item"></i></a> ';
     }
 
     /**
-     * @return string
-     */
+        * @return string
+    */
     public function getOrderButtonAttribute()
     {
-        return '<button class="btn btn-sm btn-success order_btn" title="Order Product" data-value="'.$this->id.'" data-item-quantity="0" disabled="disabled"><i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Order Product"></i></button>';
+        return '<button class="btn btn-sm btn-success order_btn"
+            title="Order Product"
+            name="order_btn"
+            data-toggle="modal"
+            data-target="#order_item_modal"
+            data-item-id="'.$this->id.'"
+            data-item-name="'.$this->name.'"
+            data-item-selling_price="'.$this->selling_price.'"
+            data-item-initial_weight_type="'.$this->initial_weight_type.'">
+            <i class="fa fa-cart-plus"></i></button>';
     }
 
     /**
@@ -75,10 +89,10 @@ trait ItemAttribute
     {
         if ($this->trashed()) {
             return '
-				<div class="btn-group btn-group-sm" role="group" aria-label="Item Actions">
-				  '.$this->restore_button.'
-				  '.$this->delete_permanently_button.'
-				</div>';
+                <div class="btn-group btn-group-sm" role="group" aria-label="Item Actions">
+                '.$this->restore_button.'
+                '.$this->delete_permanently_button.'
+                </div>';
         }
 
         if(Route::currentRouteName('admin.item*')) {
