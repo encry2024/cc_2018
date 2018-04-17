@@ -14,6 +14,7 @@ use App\Repositories\Backend\Item\ItemRepository;
 use App\Events\Backend\Item\ItemDeleted;
 use App\Models\Supplier\Supplier;
 use App\Models\Item\ItemCart;
+use function GuzzleHttp\json_encode;
 
 class ItemController extends Controller
 {
@@ -55,7 +56,7 @@ class ItemController extends Controller
      */
     public function store(StoreItemRequest $storeItemRequest)
     {
-        $this->itemRepository->create($storeItemRequest->only(
+        $item = $this->itemRepository->create($storeItemRequest->only(
             'name',
             'supplier',
             'selling_price',
@@ -65,7 +66,7 @@ class ItemController extends Controller
             'critical_stocks_level'
         ));
 
-        return redirect()->route('admin.item.index')->withFlashSuccess(__('alerts.backend.items.created', ['item' => strtoupper($storeItemRequest->name)]));
+        return redirect()->route('admin.item.index')->withFlashSuccess(__('alerts.backend.items.created', ['item' => strtoupper($item->name)]));
     }
 
     /**
@@ -101,7 +102,7 @@ class ItemController extends Controller
      */
     public function update(Item $item, UpdateItemRequest $updateItemRequest)
     {
-        $this->itemRepository->update($item, $updateItemRequest->only(
+        $item = $this->itemRepository->update($item, $updateItemRequest->only(
             'name',
             'supplier',
             'selling_price',
@@ -122,7 +123,7 @@ class ItemController extends Controller
      */
     public function destroy(Item $item, ManageItemRequest $manageItemRequest)
     {
-        $this->itemRepository->deleteById($item->id);
+        $item = $this->itemRepository->deleteById($item->id);
 
         event(new ItemDeleted($item));
 
@@ -137,7 +138,7 @@ class ItemController extends Controller
      */
     public function storeOrderedProducts(ManageItemRequest $request)
     {
-        $this->itemRepository->storeOrderedProducts($request->only(
+        $item = $this->itemRepository->storeOrderedProducts($request->only(
             'item_id',
             'quantity',
             'supplier_id'
@@ -153,5 +154,12 @@ class ItemController extends Controller
         $item_queues = ItemCart::with(['item', 'supplier'])->groupBy('supplier_id')->limit(10)->get() ;
 
         dd($item_queues);
+    }
+
+    public function getItemData(ManageItemRequest $request)
+    {
+        $item = $this->itemRepository->getSelectedItem($request->item_id);
+
+        return $item;
     }
 }
