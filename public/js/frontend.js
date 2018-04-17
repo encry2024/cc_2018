@@ -53312,10 +53312,24 @@ function addMethodForms() {
  * Place any jQuery/helper plugins in here.
  */
 $(function () {
+    $("select").chosen();
+
     /**
      * Add the data-method="delete" forms to all delete links
      */
     addMethodForms();
+
+    Array.prototype.count = function (array) {
+        return this.length;
+    };
+
+    $(document).ajaxStart(function () {
+        $("#ajaxSpinnerContainer").show();
+    }).ajaxError(function (event, jqxhr, settings, thrownError) {
+        $("#ajaxSpinnerContainer").hide();
+    }).ajaxStop(function () {
+        $("#ajaxSpinnerContainer").hide();
+    });
 
     /**
      * Bind all bootstrap tooltips & popovers
