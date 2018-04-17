@@ -36,7 +36,7 @@
 
                     <div class="tab-content">
                         <div class="tab-pane active" id="overview" role="tabpanel" aria-expanded="true">
-                            @include('backend.supplier.show.tabs.overview') 
+                            @include('backend.supplier.show.tabs.overview')
                         </div><!--tab-->
 
                         <div class="tab-pane" id="transactions" role="tabpanel" aria-expanded="true">
@@ -68,25 +68,46 @@
 
     <script>
         $(function() {
-            $(".requested-quantity").on('change', function() {
-                let item_quantity_var   =  0,
-                    diq                 =  $(this).closest('tr');
-                    item_quantity_var   = $(this).val();
-                // Debug
-                console.log(item_quantity_var);
-                // Debug - .data('item-quantity', item_quantity_var)
-                diq.find(".order_btn").attr('data-item-quantity', item_quantity_var);
+            const order_btn     = $("[name=order_btn]"),
+            selling_price_label = $("#order_item_modal").find("#item-selling-price"),
+            item_name_label     = $("#order_item_modal").find("#item-name"),
+            item_weight_label   = $("#order_item_modal").find("#weight_label"),
+            total_cost_label    = $("#order_item_modal").find("#total_cost"),
+            requested_quantity  = $("#order_item_modal").find("[name=requested_quantity]"),
+            add_to_cart_btn     = $("#order_item_modal").find("[name=add_to_cart]");
 
-                if(item_quantity_var == 0) {
-                    diq.find(".order_btn").attr('disabled', true);
+            let selling_price   = 0;
+
+            order_btn.on('click', function () {
+                const item_name     = $(this).data('item-name'),
+                item_id             = $(this).data('item-id'),
+                item_selling_price  = $(this).data('item-selling_price'),
+                item_weight_type    = $(this).data('item-initial_weight_type');
+
+                selling_price = item_selling_price.replace(",", "");
+
+                selling_price_label.text("PHP " + Number(item_selling_price).toLocaleString(undefined, {minimumFractionDigits: 2}));
+                item_name_label.text(item_name);
+                item_weight_label.text(item_weight_type);
+                add_to_cart_btn.attr('data-value', item_id);
+            });
+
+            requested_quantity.on('keyup', function () {
+                const quantity      = $(this).val().replace(",", "");
+                selling_price       = parseFloat(selling_price);
+                const total_cost    = parseFloat(quantity) * selling_price;
+
+                if ( ! isNaN(total_cost)) {
+                    total_cost_label.text("PHP " + Number(total_cost).toLocaleString(undefined, {minimumFractionDigits: 2}));
+                    add_to_cart_btn.attr("data-item-quantity", quantity);
                 } else {
-                    diq.find(".order_btn").removeAttr('disabled');
+                    total_cost_label.text("PHP 0.00");
                 }
             });
 
-            $(".order_btn").on('click', function() {
-                let item_id = $(this).data('value');
-                let quantity = $(this).data('item-quantity');
+            add_to_cart_btn.on('click', function() {
+                let item_id     = $(this).data('value');
+                let quantity    = $(this).data('item-quantity');
 
                 $.ajax({
                     type: "post",
