@@ -79,6 +79,7 @@ class CustomerRepository extends BaseRepository
             ]);
 
             if ($customer) {
+                
                 event(new CustomerCreated($customer));
 
                 return $customer;
