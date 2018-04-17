@@ -28,4 +28,6 @@ class Item extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    protected $appends = ['stocks'];
 }
