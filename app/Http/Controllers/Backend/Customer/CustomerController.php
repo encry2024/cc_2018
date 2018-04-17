@@ -133,6 +133,8 @@ class CustomerController extends Controller
 
     public function order(Customer $customer, ManageSupplierRequest $request)
     {
-        return view('backend.customer.order')->withCustomer($customer)->withItems($this->itemRepository->getStocksPaginated());
+        return view('backend.customer.order')
+            ->withCustomer($customer)
+            ->withItems($this->itemRepository->getAvailableItems());
     }
 }
