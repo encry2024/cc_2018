@@ -8,8 +8,8 @@ Route::group([
 ], function () {
 
     Route::get('item/deleted', 'ItemStatusController@getDeleted')->name('item.deleted');
-
     Route::get('item/queues', 'ItemController@getItemQueues')->name('item.queue');
+    Route::post('item/get_data', 'ItemController@getItemData')->name('item.get_data');
 
     Route::post('item_order/confirmed', 'ItemOrderController@confirmOrders')->name('item_order.confirm_orders');
 
