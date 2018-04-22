@@ -29,6 +29,7 @@
             <div id="ajaxSpinnerContainer">
                 <div id="ajaxSpinner"></div>
             </div>
+
             <div class="card-group">
                 <div class="card">
                     <div class="card-body">
@@ -50,6 +51,18 @@
                     </div><!--card-body-->
                 </div><!--card-->
             </div><!--card-group-->
+
+            <div class="from-card-footer bg-white">
+                <div class="row">
+                    <div class="col">
+                        {{ form_cancel(route('admin.customer.index'), __('buttons.general.cancel')) }}
+                    </div><!--col-->
+
+                    <div class="col text-right">
+                        <button class="btn btn-success btn-sm" id="create_order_btn">Create Order</button>
+                    </div><!--col-->
+                </div><!--card-footer-->
+            </div><!--card-->
         </div><!--col-->
     </div><!--row-->
 
