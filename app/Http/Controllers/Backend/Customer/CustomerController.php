@@ -104,7 +104,7 @@ class CustomerController extends Controller
      */
     public function update(Customer $customer, UpdateCustomerRequest $updateCustomerRequest)
     {
-        $this->customerRepository->update($customer, $updateCustomerRequest->only(
+        $customer = $this->customerRepository->update($customer, $updateCustomerRequest->only(
             'name',
             'email',
             'contact_number',
@@ -124,7 +124,7 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer, ManageCustomerRequest $manageCustomerRequest)
     {
-        $this->customerRepository->deleteById($customer->id);
+        $customer = $this->customerRepository->deleteById($customer->id);
 
         event(new CustomerDeleted($customer));
 
@@ -136,5 +136,14 @@ class CustomerController extends Controller
         return view('backend.customer.order')
             ->withCustomer($customer)
             ->withItems($this->itemRepository->getAvailableItems());
+    }
+
+    public function storeCustomerOrder(Customer $customer, ManageCustomerRequest $request)
+    {
+        $order = $this->customerRepository->storeCustomerOrder($customer, $request->only(
+            'customer_orders', 'collection_date', 'balance', 'payment_type'
+        ));
+
+        return json_encode($order);
     }
 }
