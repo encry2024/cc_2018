@@ -21,6 +21,10 @@
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/customer*')) }}" href="{{ route('admin.customer.index') }}"><i class="fa fa-users"></i> {{ __('menus.backend.sidebar.customer') }}</a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/order*')) }}" href="{{ route('admin.order.index') }}"><i class="fa fa-clipboard"></i> Orders</a>
+            </li>
+
             <li class="nav-title">
                 {{ __('menus.backend.sidebar.system') }}
             </li>
