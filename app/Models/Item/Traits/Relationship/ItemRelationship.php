@@ -5,6 +5,7 @@ namespace App\Models\Item\Traits\Relationship;
 use App\Models\Cart\Cart;
 use App\Models\Supplier\Supplier;
 use App\Models\Transaction\Transaction;
+use App\Models\Order\Order;
 
 /**
  * Trait ItemRelationship.
@@ -33,5 +34,13 @@ trait ItemRelationship
     public function carts()
     {
         return $this->belongsToMany(Cart::class);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class);
     }
 }
