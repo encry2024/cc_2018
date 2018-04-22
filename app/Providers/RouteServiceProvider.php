@@ -7,6 +7,7 @@ use App\Models\Supplier\Supplier;
 use App\Models\Item\Item;
 use App\Models\Customer\Customer;
 use App\Models\Transaction\Transaction;
+use App\Models\Order\Order;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -74,6 +75,13 @@ class RouteServiceProvider extends ServiceProvider
             $transaction = new Transaction;
 
             return Transaction::withTrashed()->where($transaction->getRouteKeyName(), $value)->first();
+        });
+
+        # Order
+        $this->bind('deletedOrder', function ($value) {
+            $order = new Order;
+
+            return Order::withTrashed()->where($order->getRouteKeyName(), $value)->first();
         });
 
         parent::boot();
