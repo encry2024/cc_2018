@@ -2,6 +2,28 @@
     <div class="col-lg-12">
         <h5 class="card-title">MENU</h5>
         <hr>
+        <div class="form-group row">
+            {{ html()->label('COLLECTION DATE')->class('col-md-4 form-control-label')->for('collection_date') }}
+            <div class="col-sm-8">
+                <input type="date" class="form-control" id="collection_date">
+            </div><!--col-sm-8-->
+        </div><!--form-group-->
+
+        <div class="form-group row">
+            {{ html()->label('PAYMENT TYPE')->class('col-md-4 form-control-label')->for('payment_type') }}
+            <div class="col-sm-8">
+                <select name="payment_type" id="payment_type_dropdown" class="form-control" data-placeholder="-- Select Payment Type --">
+                    <option value=""></option>
+                    <option value="term">Term Payment</option>
+                    <option value="cod">Cash On Delivery</option>
+                </select>
+            </div><!--col-sm-8-->
+        </div><!--form-group-->
+
+        <div id="day_term_container" style="display: none;"></div>
+
+        <hr>
+
         <div class="row mt-4 mb-4">
             <div class="col">
                 <div class="form-group row">
