@@ -7,6 +7,10 @@ namespace App\Models\Item\Traits\Attribute;
  */
 trait ItemOrderAttribute
 {
+    public function getOrderedQuantityAttribute()
+    {
+        return number_format($this->requested_quantity, 2) . " kg";
+    }
 
     /**
      * @return string
