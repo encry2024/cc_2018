@@ -53331,10 +53331,14 @@ $(function () {
         $("#ajaxSpinnerContainer").hide();
     });
 
+    $('#add_payment_modal').on('shown.bs.modal', function () {
+        $('#payment_dropdown', this).chosen('destroy').chosen();
+    });
+
     /**
      * Bind all bootstrap tooltips & popovers
      */
-    $("[data-toggle='tooltip']").tooltip();
+    $("[data-toggle='tooltip']").tooltip({ container: "body" });
 
     /**
      * Generic confirm form delete using Sweet Alert
@@ -53394,6 +53398,186 @@ $(function () {
             type: 'info'
         }).then(function (result) {
             result.value && window.location.assign(link.attr('href'));
+        });
+    }).on('click', 'a[name=order_btn]', function (e) {
+        e.preventDefault();
+
+        var link = $(this),
+            credit_limit = link.attr('data-credit_limit'),
+            current_credit = link.attr('data-current_credit');
+
+        credit_limit = parseFloat(credit_limit);
+        current_credit = parseFloat(current_credit);
+
+        if (current_credit >= credit_limit) {
+            swal({
+                title: 'The customers credit limit has already reached',
+                confirmButtonText: 'Ok',
+                type: 'error'
+            });
+        } else {
+            window.location = link.attr('href');
+        }
+    });
+
+    $("#payment_dropdown").on('change', function () {
+        var dropdown = $(this),
+            html = "";
+
+        $("#field_container").find("div.form-group").remove();
+        $("#field_container").find("hr").remove();
+        $("#payment_method_container").remove();
+
+        if (dropdown.val() == "Check") {
+            html = '<div class="form-group row">';
+            html += '<label class="form-control-label col-sm-3">Type of Check</label>';
+            html += '<div class="col-sm-9">';
+            html += '<select name="check_type" id="check_type" class="form-control" data-placeholder="-- Select Payment Method --">';
+            html += '<option value=""></option>';
+            html += '<option value="dated">Dated Check</option>';
+            html += '<option value="post-dated">Post-Dated Check</option>';
+            html += '</select></div></div><hr>';
+
+            $("#field_container").append(html).hide().slideDown();
+            $("#container").append('<div id="payment_method_container"></div>');
+            $("#check_type").chosen();
+
+            var numericField = document.getElementsByClassName('numeric-input');
+
+            for (var elementIndex = 0; elementIndex < numericField.length; elementIndex++) {
+                new Cleave(numericField[elementIndex], {
+                    numeral: true,
+                    numeralThousandsGroupStyle: 'thousand'
+                });
+            }
+        } else if (dropdown.val() == "Cash") {
+            html = '<div id="payment_method_child_container"><div class="form-group row">';
+            html += '<label class="form-control-label col-sm-3">Date</label>';
+            html += '<div class="col-sm-9">';
+            html += '<input class="form-control" type="text" value="' + moment().format("YYYY-MM-DD") + '" disabled name="date">';
+            html += '</div></div>';
+
+            html += '<div class="form-group row">';
+            html += '<label class="form-control-label col-sm-3">Amount</label>';
+            html += '<div class="input-group col-sm-9">';
+            html += '<span class="input-group-text">PHP</span>';
+            html += '<input class="form-control numeric-input" type="text" name="amount_received">';
+            html += '</div></div></div>';
+
+            $("#field_container").append(html).hide().slideDown();
+
+            var _numericField = document.getElementsByClassName('numeric-input');
+
+            for (var _elementIndex = 0; _elementIndex < _numericField.length; _elementIndex++) {
+                new Cleave(_numericField[_elementIndex], {
+                    numeral: true,
+                    numeralThousandsGroupStyle: 'thousand'
+                });
+            }
+        }
+    });
+
+    $(document).on('change', '#check_type', function () {
+        var html = "";
+        $("#payment_method_child_container").remove();
+        if ($(this).val() == "dated") {
+            html = '<div id="payment_method_child_container"><div class="form-group row">';
+            html += '<label class="form-control-label col-sm-3">Date</label>';
+            html += '<div class="col-sm-9">';
+            html += '<input class="form-control" type="text" value="' + moment().format("YYYY-MM-DD") + '" disabled name="date">';
+            html += '</div></div>';
+
+            html += '<div class="form-group row">';
+            html += '<label class="form-control-label col-sm-3">Check Number</label>';
+            html += '<div class="col-sm-9">';
+            html += '<input class="form-control" type="text" name="account_number">';
+            html += '</div></div>';
+
+            html += '<div class="form-group row">';
+            html += '<label class="form-control-label col-sm-3">Bank</label>';
+            html += '<div class="col-sm-9">';
+            html += '<input class="form-control" type="text" name="bank">';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="form-group row">';
+            html += '<label class="form-control-label col-sm-3">Amount</label>';
+            html += '<div class="input-group col-sm-9">';
+            html += '<span class="input-group-text">PHP</span>';
+            html += '<input class="form-control numeric-input" type="text" name="amount_received">';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+
+            $("#payment_method_container").append(html).hide().slideDown();
+
+            var numericField = document.getElementsByClassName('numeric-input');
+
+            for (var elementIndex = 0; elementIndex < numericField.length; elementIndex++) {
+                new Cleave(numericField[elementIndex], {
+                    numeral: true,
+                    numeralThousandsGroupStyle: 'thousand'
+                });
+            }
+        } else {
+            $("#payment_method_container").hide().slideUp();
+            $("#payment_method_child_container").remove();
+            html = '<div id="payment_method_child_container"><div class="form-group row">';
+            html += '<label class="form-control-label col-sm-3">Date</label>';
+            html += '<div class="col-sm-9">';
+            html += '<input class="form-control" type="date" name="date">';
+            html += '</div></div>';
+
+            html += '<div class="form-group row">';
+            html += '<label class="form-control-label col-sm-3">Check Number</label>';
+            html += '<div class="col-sm-9">';
+            html += '<input class="form-control" type="text" name="account_number">';
+            html += '</div></div>';
+
+            html += '<div class="form-group row">';
+            html += '<label class="form-control-label col-sm-3">Bank</label>';
+            html += '<div class="col-sm-9">';
+            html += '<input class="form-control" type="text" name="bank">';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="form-group row">';
+            html += '<label class="form-control-label col-sm-3">Amount</label>';
+            html += '<div class="input-group col-sm-9">';
+            html += '<span class="input-group-text">PHP</span>';
+            html += '<input class="form-control numeric-input" type="text" name="amount_received">';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+
+            $("#payment_method_container").append(html).hide().slideDown();
+
+            var _numericField2 = document.getElementsByClassName('numeric-input');
+
+            for (var _elementIndex2 = 0; _elementIndex2 < _numericField2.length; _elementIndex2++) {
+                new Cleave(_numericField2[_elementIndex2], {
+                    numeral: true,
+                    numeralThousandsGroupStyle: 'thousand'
+                });
+            }
+        }
+    });
+
+    $("#close_add_payment_modal").on("click", function () {
+        swal({
+            title: "Are you sure you want to cancel add payment?",
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            type: "warning"
+        }).then(function (result) {
+            if (result.value) {
+                $("#add_payment_modal").modal("hide");
+                $("#field_container").find("div.form-group").remove();
+                $("#field_container").find("hr").remove();
+                $("#payment_method_container").remove();
+                $('#payment_dropdown').val("");
+            }
         });
     });
 });
