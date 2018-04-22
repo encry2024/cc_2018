@@ -25,6 +25,7 @@
 
         @stack('after-styles')
         <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/moment.js') }}"></script>
         <script src="{{ asset('notific8/src/js/notific8.js') }}"></script>
         <script>
             window.Laravel = <?php echo json_encode([
