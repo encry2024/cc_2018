@@ -8,16 +8,21 @@
 
 namespace App\Repositories\Backend\Customer;
 
+# Facades
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
-use App\Models\Customer\Customer;
+use Auth;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
-use App\Events\Backend\Customer\CustomerCreated;
-
+# Models
+use App\Models\Customer\Customer;
+use App\Models\Order\Order;
+use App\Models\Item\Item;
+# Events
 use App\Events\Backend\Customer\CustomerUpdated;
 use App\Events\Backend\Customer\CustomerRestored;
 use App\Events\Backend\Customer\CustomerPermanentlyDeleted;
+use App\Events\Backend\Customer\CustomerCreated;
 
 /**
  * Class CustomerRepository.
@@ -79,7 +84,7 @@ class CustomerRepository extends BaseRepository
             ]);
 
             if ($customer) {
-                
+
                 event(new CustomerCreated($customer));
 
                 return $customer;
@@ -160,5 +165,40 @@ class CustomerRepository extends BaseRepository
         }
 
         throw new GeneralException(__('exceptions.backend.customer.restore_error'));
+    }
+
+    public function storeCustomerOrder(Customer $customer, $data)
+    {
+        return DB::transaction(function () use ($customer, $data) {
+            $orders = $customer->orders()->create([
+                'user_id'         => Auth::user()->id,
+                'collection_date' => $data['collection_date'],
+                'balance'         => str_replace(",", "", $data['balance']),
+                'payment_type'    => str_replace(",", "", $data['payment_type']),
+                'note'            => 'Test Note'
+            ]);
+
+            if ($orders) {
+                $item_orders = $orders->item_orders()->createMany((array) $data['customer_orders']);
+
+                if ($item_orders) {
+                    foreach ($item_orders as $item_order) {
+                        $requested_stocks       = $item_order->requested_quantity;
+
+                        $item                   = Item::find($item_order->item_id);
+                        $item_current_stocks    = $item->final_weight;
+                        $remaining_stocks       = $item_current_stocks - $requested_stocks;
+
+                        $item->update(['final_weight' => $remaining_stocks]);
+                    }
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            return false;
+        });
     }
 }
