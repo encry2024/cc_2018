@@ -1,24 +1,34 @@
 <script>
+    const stocks_field           = $("#stocks"),
+        selling_price_field      = $("#selling_price"),
+        total_price_field        = $("#total_price"),
+        date_field               = $("#date"),
+        total_cost_label         = $("#total_cost_label");
+        customer_order_container = $("#customer_order_container"),
+        payment_type             = $("#payment_type_dropdown"),
+        requested_quantity_field = $("#requested_quantity");
+
+    let item_weight         = 0,
+        item_selling_price  = 0,
+        requested_quantity  = 0,
+        item_id             = 0,
+        total_price         = 0,
+        date                = null,
+        item_name           = null,
+        html                = null,
+        customer_orders     = [],
+        item_id_list        = [],
+        selected_item       = [],
+        collection_date     = null,
+        payment_value       = null;
+
+    function getPaymentValue(value)
+    {
+        payment_value = value + " Day(s) Term";
+        console.log(payment_value);
+    }
+
     $(document).ready(function() {
-        const stocks_field           = $("#stocks"),
-            selling_price_field      = $("#selling_price"),
-            total_price_field        = $("#total_price"),
-            date_field               = $("#date"),
-            customer_order_container = $("#customer_order_container"),
-            requested_quantity_field = $("#requested_quantity");
-
-        let item_weight         = 0,
-            item_selling_price  = 0,
-            requested_quantity  = 0,
-            item_id             = 0,
-            total_price         = 0,
-            date                = null,
-            item_name           = null,
-            html                = null,
-            customer_orders     = [],
-            item_id_list        = [],
-            selected_item       = [];
-
         // Get item's data
         $("#item_dropdown").on("change", function () {
             item_id = $(this).val();
@@ -48,10 +58,12 @@
 
         // Validate, and compute requested quantity
         $("#requested_quantity").on("keyup", function(e) {
+            let discount        = $("#discount").val();
+
             requested_quantity = $(this).val();
             requested_quantity = requested_quantity.replace(",", "");
 
-            total_price = (parseFloat(item_selling_price) * parseFloat(requested_quantity)).toFixed(2);
+            total_price = computeTotalPrice(discount, item_selling_price, requested_quantity);
 
             if ( ! isNaN(total_price)) {
                 total_price_field.val(Number(total_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
@@ -76,6 +88,7 @@
                 html += "</tr>";
 
                 $("#item_count").text(item_id_list.count());
+                displayTotalCost();
 
                 customer_order_container.append(html);
                 html = "";
@@ -105,46 +118,91 @@
         $("#remove_btn").on("click", function () {
             if (selected_item.count() == 0) {
                 swal({
-                    title: 'There are no selected items.',
+                    title: 'There are no selected items to remove.',
                     confirmButtonText: 'Ok',
-                    type: 'info'
+                    type: 'warning'
                 });
             } else {
                 swal({
-                title: 'Are you sure you want to remove the selected items in the list?',
-                showCancelButton: true,
-                confirmButtonText: 'Remove',
-                cancelButtonText: 'Cancel',
-                type: 'warning'
-            }).then(result => {
-                if (result.value) {
-                    for(let i=0; i<selected_item.length; i++) {
-                        item = selected_item[i];
-                        // Remove selected item from item_id_list array
-                        let itemIdListArray = _.remove(item_id_list, function(value) { return value === parseInt(item.dataset.itemId); });
-                        // Remove selected item from customer_orders
-                        let customerOrdersArray = _.remove(customer_orders, customer_order => customer_order.item_id === parseInt(item.dataset.itemId));
-                        // Remove selected item from selected_item
-                        let selectedItemArray = _.remove(selected_item, item => item.dataset.itemId === parseInt(item.dataset.itemId));
-                        // Remove item from the customer's order table
-                        item.remove();
-                        $("#item_count").text(item_id_list.count());
-                        console.log("---------------AN ITEM WAS REMOVED FROM ITEM ID LIST ARRAY---------------");
-                        console.log(itemIdListArray);
-                        console.log("---------------AN ITEM WAS REMOVED FROM CUSTOMER ORDERS ARRAY---------------");
-                        console.log(customerOrdersArray);
-                        console.log("---------------AN ITEM WAS REMOVED FROM SELECTED ITEM ARRAY---------------");
-                        console.log(selectedItemArray);
+                    title: 'Are you sure you want to remove the selected items in the list?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Remove',
+                    cancelButtonText: 'Cancel',
+                    type: 'warning'
+                }).then(result => {
+                    if (result.value) {
+                        for(let i=0; i<selected_item.length; i++) {
+                            item = selected_item[i];
+                            // Remove selected item from item_id_list array
+                            let itemIdListArray = _.remove(item_id_list, function(value) { return value === parseInt(item.dataset.itemId); });
+                            // Remove selected item from customer_orders
+                            let customerOrdersArray = _.remove(customer_orders, customer_order => customer_order.item_id === parseInt(item.dataset.itemId));
+                            // Remove selected item from selected_item
+                            let selectedItemArray = _.remove(selected_item, item => item.dataset.itemId === parseInt(item.dataset.itemId));
+                            // Remove item from the customer's order table
+                            item.remove();
+                            $("#item_count").text(item_id_list.count());
+                            console.log("---------------AN ITEM WAS REMOVED FROM ITEM ID LIST ARRAY---------------");
+                            console.log(itemIdListArray);
+                            console.log("---------------AN ITEM WAS REMOVED FROM CUSTOMER ORDERS ARRAY---------------");
+                            console.log(customerOrdersArray);
+                            console.log("---------------AN ITEM WAS REMOVED FROM SELECTED ITEM ARRAY---------------");
+                            console.log(selectedItemArray);
+                        }
+                        // Recompute total cost.
+                        displayTotalCost();
+                        swal('Selected Items was successfully removed from the list.', '', 'success');
+                        console.log("---------------DISPLAYING DATA FROM SELECTED ITEM ARRAY AFTER DELETION");
+                        console.log(selected_item);
+                        console.log("*************** REINITIALIZING DATA FROM SELECTED ITEM ARRAY ***************");
+                        selected_item = [];
+                        console.log("---------------VERIFYING SELECTED ITEM ARRAY AFTER REINITIALIZING THE ARRAY---------------");
+                        console.log(selected_item);
                     }
-                    swal('Selected Items was successfully removed from the list.', '', 'success');
-                    console.log("---------------DISPLAYING DATA FROM SELECTED ITEM ARRAY AFTER DELETION");
-                    console.log(selected_item);
-                    console.log("*************** DELETING DATA FROM SELECTED ITEM ARRAY ***************");
-                    selected_item = [];
-                    console.log("---------------VERIFYING SELECTED ITEM ARRAY AFTER REINITIALIZING THE ARRAY---------------");
-                    console.log(selected_item);
+                });
+            }
+        });
+
+        $("#create_order_btn").click(function () {
+            if (customer_orders.count() == 0) {
+                swal({
+                    title: "There are no customer orders to submit",
+                    confirmButtonText: 'Ok',
+                    type: 'warning'
+                });
+            } else {
+                swal({
+                    title: "Are you sure you want to create this order?",
+                    confirmButtonText: 'Yes, Create Order',
+                    cancelButtonText: 'No',
+                    type: 'warning'
+                }).then(result => {
+                    if (result.value) {
+                        const collection_date = $("#collection_date").val();
+
+                        submitDataRequest(customer_orders, collection_date);
+                    }
+                })
+            }
+        });
+
+        $("#payment_type_dropdown").on("change", function () {
+            let type = $(this);
+            const day_term_container = $("#day_term_container");
+            payment_value = null;
+
+            if (type.val() == "term") {
+                day_term_container.append('<input type="text" class="form-control numeric-input col-sm-8" style="margin-left: 11.85rem; width: 65%;" placeholder="Day(s) Term" id="day_term" onkeyup="getPaymentValue($(this).val())">');
+                day_term_container.hide().slideDown();
+                reinitializeCleave();
+            } else {
+                if ( day_term_container.css('display', 'block;')) {
+                    day_term_container.slideUp();
+                    $("#day_term").val(null);
+                    day_term_container.find('input.numeric-input').remove();
                 }
-            });
+
+                payment_value = type.val();
             }
         });
 
@@ -153,32 +211,61 @@
             date = $(this).val();
         });
 
+        $("#collection_date").on("change", function () {
+            collection_date = $(this).val();
+        })
+
+        function computeTotalPrice(customerDiscount, selling_price, quantity)
+        {
+            let total_cost      = selling_price * quantity;
+            let discount        = parseFloat(customerDiscount) / 100;
+            let discounted_cost = 0;
+
+            discount            = parseFloat(total_cost) * parseFloat(discount);
+            discounted_cost     = total_cost - discount;
+
+            return parseFloat(discounted_cost).toFixed(2);
+        }
+
         // Validate Requests before adding an item
-        function validateDataRequest() {
+        function validateDataRequest()
+        {
             if ($.inArray(item_id, item_id_list) != '-1') {
                 swal({
                     title: '"'+ item_name +'" is already on the list.',
                     confirmButtonText: 'Ok',
-                    type: 'info'
+                    type: 'warning'
                 });
             } else {
-                if (item_id == 0) {
+                if (collection_date == null) {
+                    swal({
+                        title: 'Collection Date field is empty.',
+                        confirmButtonText: 'Ok',
+                        type: 'warning'
+                    });
+                } else if (payment_type.val() == "") {
+                    swal({
+                        title: 'You have not yet selected a payment method',
+                        confirmButtonText: 'Ok',
+                        type: 'warning'
+                    });
+                } else if ((payment_type.val() == "term" && $("#day_term").val() == "")) {
+                    swal({
+                        title: 'Day(s) Term field is empty.',
+                        confirmButtonText: 'Ok',
+                        type: 'warning'
+                    });
+                } else if (item_id == 0) {
                     swal({
                         title: 'There is no selected item to add.',
                         confirmButtonText: 'Ok',
-                        type: 'info'
+                        type: 'warning'
                     });
                 } else if (requested_quantity == 0) {
                     swal({
                         title: 'Requested Quantity field is empty.',
                         confirmButtonText: 'Ok',
-                        type: 'info'
-                    });
-                } else if (date == null) {
-                    swal({
-                        title: 'Delivery Date field is empty.',
-                        confirmButtonText: 'Ok',
-                        type: 'info'
+                        type: 'warning'
                     });
                 } else if (parseFloat(requested_quantity) > parseFloat(item_weight)) {
                     console.log("Requested Quantity:" + requested_quantity);
@@ -187,15 +274,19 @@
                     swal({
                         title: 'Requested Quantity must not be greater than the item\'s stocks.',
                         confirmButtonText: 'Ok',
-                        type: 'info'
+                        type: 'warning'
+                    });
+                } else if (date == null) {
+                    swal({
+                        title: 'Delivery Date field is empty.',
+                        confirmButtonText: 'Ok',
+                        type: 'warning'
                     });
                 } else {
                     customer_orders.push({
                         item_id: item_id,
-                        item_name: item_name,
-                        price: item_selling_price,
-                        quantity: requested_quantity,
-                        cost: total_price,
+                        requested_quantity: requested_quantity,
+                        total_cost: total_price,
                         delivery_date: date
                     });
 
@@ -212,7 +303,8 @@
         }
 
         // Clear all variables & input fields
-        function clearRequestedData() {
+        function clearRequestedData()
+        {
             // Clear Variables
             requested_quantity  = 0;
             item_id             = 0;
@@ -231,6 +323,67 @@
             date_field.val("");
             date_field.attr('disabled', true);
             total_price_field.val("0.00");
+        }
+
+        function submitDataRequest(requests, collection_date)
+        {
+            balance = displayTotalCost();
+
+            $.ajax({
+                type: "POST",
+                url: '{{ route("admin.customer.order.store", $customer->id) }}',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    customer_orders: requests,
+                    collection_date: collection_date,
+                    balance: balance.text(),
+                    payment_type: payment_value
+                },
+                dataType: "JSON",
+                success: function (data) {
+                    console.log('---------------RETURNED DATA---------------');
+                    console.log(data);
+                    if (data == true) {
+                        swal({
+                            title: "Order was successfully created.",
+                            confirmButtonText: 'Ok',
+                            type: 'success'
+                        }).then(result => {
+                            window.location.reload();
+                        });
+                    }
+                },
+                error: function () {
+                    swal({
+                        title: "Something went wrong while processing the customer's order. Please contact the developer.",
+                        confirmButtonText: 'Ok',
+                        type: 'error'
+                    });
+                }
+            });
+        }
+
+        function displayTotalCost()
+        {
+            let total_cost = 0;
+
+            for (let i=0 ; i<customer_orders.length ; i++) {
+                let data = customer_orders[i];
+
+                total_cost += parseFloat(data.total_cost);
+            }
+
+            return total_cost_label.text(Number(total_cost).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+        }
+
+        function reinitializeCleave()
+        {
+            for(let elementIndex=0; elementIndex<numericField.length; elementIndex++) {
+                new Cleave(numericField[elementIndex], {
+                    numeral: true,
+                    numeralThousandsGroupStyle: 'thousand'
+                });
+            }
         }
     });
 </script>
