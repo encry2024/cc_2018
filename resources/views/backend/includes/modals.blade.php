@@ -67,7 +67,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">ITEM ORDER</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -125,7 +125,7 @@
                                     <label class="col-md-5 form-control-label">DELIVERY DATE:</label>
 
                                     <div class="col-sm-7">
-                                        <input type="date" class="form-control input-sm" forma>
+                                        <input type="date" class="form-control input-sm">
                                     </div>
                                 </div><!--form-group-->
                             </div><!--col-->
@@ -141,3 +141,44 @@
         </div>
     </div>
 </div>
+
+@if (Route::currentRouteName() == "admin.order.show")
+<!-- Add Payment Modal -->
+<form class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="add_payment_modal" action="{{ route('admin.order.add_payment', $model->id) }}" method="POST">
+    {{ csrf_field() }}
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myLargeModalLabel">Add Customer Payment</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label class="form-control-label col-sm-3">Payment Method</label>
+
+                        <div class="col-sm-9">
+                            <select name="payment_dropdown" id="payment_dropdown" class="form-control" data-placeholder="-- Select Payment Method --">
+                                <option value=""></option>
+                                <option value="Cash">Cash</option>
+                                <option value="Check">Check</option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr>
+                    <div id="container">
+                        <div id="field_container" style="display: none;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Confirm</button>
+                <a class="btn btn-danger" id="close_add_payment_modal">Cancel</a>
+            </div>
+        </div>
+    </div>
+</form>
+@endif
