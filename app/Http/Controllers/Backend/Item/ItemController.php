@@ -14,7 +14,7 @@ use App\Repositories\Backend\Item\ItemRepository;
 use App\Events\Backend\Item\ItemDeleted;
 use App\Models\Supplier\Supplier;
 use App\Models\Item\ItemCart;
-use function GuzzleHttp\json_encode;
+use App\Http\Requests\Backend\Customer\ManageCustomerRequest;
 
 class ItemController extends Controller
 {
@@ -146,7 +146,7 @@ class ItemController extends Controller
 
         $item = Item::find($request->item_id);
 
-        return \GuzzleHttp\json_encode($item);
+        return json_encode($item);
     }
 
     public function getItemQueues(ManageItemRequest $request)
@@ -161,5 +161,10 @@ class ItemController extends Controller
         $item = $this->itemRepository->getSelectedItem($request->item_id);
 
         return $item;
+    }
+
+    public function storeCustomerOrder(Customer $customer, ManageCustomerRequest $request)
+    {
+        # code...
     }
 }
