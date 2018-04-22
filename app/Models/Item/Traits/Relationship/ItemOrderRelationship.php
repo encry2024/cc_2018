@@ -2,7 +2,7 @@
 
 namespace App\Models\Item\Traits\Relationship;
 
-use App\Models\Supplier\Supplier;
+use App\Models\Order\Order;
 use App\Models\Item\Item;
 
 /**
@@ -21,8 +21,8 @@ trait ItemOrderRelationship
     /**
      * @return mixed
      */
-    public function supplier()
+    public function order()
     {
-        return $this->belongsTo(Supplier::class);
+        return $this->belongsToMany(Order::class);
     }
 }
