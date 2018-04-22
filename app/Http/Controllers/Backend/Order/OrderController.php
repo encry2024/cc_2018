@@ -4,38 +4,35 @@ namespace App\Http\Controllers\Backend\Order;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+# Models
+use App\Models\Customer\Customer;
+use App\Models\Order\Order;
+# Requests
+use App\Http\Requests\Backend\Order\ManageOrderRequest;
+use App\Http\Requests\Backend\Order\EditOrderRequest;
+use App\Http\Requests\Backend\Order\UpdateOrderRequest;
+use App\Http\Requests\Backend\Order\AddPaymentRequest;
+# Repository
+use App\Repositories\Backend\Order\OrderRepository;
+use App\Http\Requests\Backend\Customer\ManageCustomerRequest;
 
 class OrderController extends Controller
 {
+    protected $orderRepository;
+
+    public function __construct(OrderRepository $orderRepository)
+    {
+        $this->orderRepository = $orderRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ManageOrderRequest $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return view('backend.order.index')->withOrders($this->orderRepository->getOrderPaginated());
     }
 
     /**
@@ -44,9 +41,9 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Order $order, ManageOrderRequest $request)
     {
-        //
+        return view('backend.order.show')->withModel($order);
     }
 
     /**
@@ -55,9 +52,9 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Order $order, EditOrderRequest $request)
     {
-        //
+        return view('backend.order.show')->withModel($order);
     }
 
     /**
@@ -67,7 +64,7 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateOrderRequest $request, Order $order)
     {
         //
     }
@@ -81,5 +78,19 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function addPayment(Order $order, Request $request)
+    {
+        $add_payment = $this->orderRepository->addPayment($order, $request->only(
+            'payment_dropdown',
+            'amount_received',
+            'date',
+            'account_number',
+            'check_type',
+            'bank'
+        ));
+
+        // return redirect()->back();
     }
 }
