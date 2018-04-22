@@ -23,12 +23,19 @@
 
             <tr>
                 <th>{{ __('labels.backend.customers.tabs.content.overview.discount') }}</th>
-                <td>% {{ $customer->discount ? $customer->discount : 'N/A' }}</td>
+                <td>{{ $customer->discount ? $customer->discount : 'N/A' }} %</td>
             </tr>
 
             <tr>
-                <th>{{ __('labels.backend.customers.tabs.content.overview.credit_limit') }}</th>
-                <td>PHP {{ number_format($customer->credit_limit, 2) }}</td>
+                <th>Credit</th>
+                <td>
+                    <div class="progress" data-toggle="tooltip" title="Usable Credit PHP {{ number_format($customer->credit_limit - ($customer->credit_limit * ($customer->progress_credit / 100)), 2) }}">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{ $customer->progress_credit }}%" aria-valuenow="{{ $customer->progress_credit }}" aria-valuemin="0" aria-valuemax="100%"
+                        >
+                        <span>{{ $customer->progress_credit }}% ({{ $customer->current_credit }} / PHP {{ number_format($customer->credit_limit, 2) }})</span>
+                        </div>
+                    </div>
+                </td>
             </tr>
 
             <tr>
