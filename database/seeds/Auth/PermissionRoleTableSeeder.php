@@ -51,7 +51,15 @@ class PermissionRoleTableSeeder extends Seeder
         Permission::create(['name' => 'restore customer']);
         Permission::create(['name' => 'delete customer']);
         Permission::create(['name' => 'force delete customer']);
-
+        # Create Order Permission
+        Permission::create(['name' => 'view orders']);
+        Permission::create(['name' => 'store order']);
+        Permission::create(['name' => 'edit order']);
+        Permission::create(['name' => 'update order']);
+        Permission::create(['name' => 'restore order']);
+        Permission::create(['name' => 'delete order']);
+        Permission::create(['name' => 'force delete order']);
+        Permission::create(['name' => 'add payment']);
 
         // ALWAYS GIVE ADMIN ROLE ALL PERMISSIONS
         $admin->givePermissionTo('view backend');
@@ -79,6 +87,15 @@ class PermissionRoleTableSeeder extends Seeder
         $admin->givePermissionTo('restore customer');
         $admin->givePermissionTo('delete customer');
         $admin->givePermissionTo('force delete customer');
+        # Give admin all permission to Order
+        $admin->givePermissionTo('view orders');
+        $admin->givePermissionTo('store order');
+        $admin->givePermissionTo('edit order');
+        $admin->givePermissionTo('update order');
+        $admin->givePermissionTo('restore order');
+        $admin->givePermissionTo('delete order');
+        $admin->givePermissionTo('force delete order');
+        $admin->givePermissionTo('add payment');
 
         // Assign Permissions to other Roles
         $executive->givePermissionTo('view backend');
