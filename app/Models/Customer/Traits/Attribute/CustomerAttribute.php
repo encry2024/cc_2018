@@ -8,6 +8,41 @@ namespace App\Models\Customer\Traits\Attribute;
 trait CustomerAttribute
 {
     /**
+     * Displays overall credit from all unpaid order of the customer
+     *
+     * @return string $current_credit
+     */
+    public function getCurrentCreditAttribute()
+    {
+        $current_credit = 0;
+
+        foreach ($this->orders->where('status', 'PENDING') as $order) {
+            $current_credit += $order->balance;
+        }
+
+        return "PHP " . number_format($current_credit, 2);
+    }
+
+    /**
+     * Displays the percentage of the credit used
+     *
+     * @return double $current_credit
+     */
+    public function getProgressCreditAttribute()
+    {
+        $current_credit = 0;
+
+        foreach ($this->orders->where('status', 'PENDING') as $order) {
+            $current_credit += $order->balance;
+        }
+
+        $current_credit = $current_credit / $this->credit_limit;
+        $current_credit = $current_credit * 100;
+
+        return $current_credit;
+    }
+
+    /**
      * @return string
      */
     public function getShowButtonAttribute()
@@ -20,7 +55,21 @@ trait CustomerAttribute
      */
     public function getOrderButtonAttribute()
     {
-        return '<a href="'.route('admin.customer.order', $this).'" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Make an Order"><i class="fa fa-truck" data-toggle="tooltip" data-placement="top"></i></a>';
+        $current_credit = explode('PHP ', $this->current_credit);
+        $current_credit = $current_credit[1];
+        $current_credit = str_replace(",", "", $current_credit);
+
+        return
+            '<a href="'.route('admin.customer.order', $this).'"
+            name="order_btn"
+            class="btn btn-success"
+            data-toggle="tooltip"
+            data-placement="top"
+            data-credit_limit="'.$this->credit_limit.'"
+            data-current_credit="'.$current_credit.'"
+            title="Make an Order">
+                <i class="fa fa-truck" data-toggle="tooltip" data-placement="top"></i>
+            </a>';
     }
 
     /**
@@ -34,23 +83,16 @@ trait CustomerAttribute
     /**
      * @return string
      */
-    /*public function getDeliverButtonAttribute()
-    {
-        return '<a href="'.route('admin.customer.show', $this).'" class="btn btn-info"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="'.__('buttons.general.crud.view').'"></i></a>';
-    }*/
-
-    /**
-     * @return string
-     */
     public function getDeleteButtonAttribute()
     {
         if ($this->id) {
-            return '<a href="'.route('admin.customer.destroy', $this).'"
-                 data-method="delete"
-                 data-trans-button-cancel="'.__('buttons.general.cancel').'"
-                 data-trans-button-confirm="'.__('buttons.general.crud.delete').'"
-                 data-trans-title="'.__('strings.backend.general.are_you_sure').'"
-                 class="btn btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="'.__('buttons.general.crud.delete').'"></i></a> ';
+            return
+                '<a href="'.route('admin.customer.destroy', $this).'"
+                data-method="delete"
+                data-trans-button-cancel="'.__('buttons.general.cancel').'"
+                data-trans-button-confirm="'.__('buttons.general.crud.delete').'"
+                data-trans-title="'.__('strings.backend.general.are_you_sure').'"
+                class="btn btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="'.__('buttons.general.crud.delete').'"></i></a> ';
         }
     }
 
