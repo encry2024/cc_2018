@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->integer('customer_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->string('status')->default('PENDING');
-            $table->decimal('balance', 18, 2);
+            $table->decimal('balance', 18, 2)->default('0.00');
             $table->date('collection_date');
             $table->string('note');
             $table->timestamps();
