@@ -171,7 +171,7 @@ $(function(){
             html = '<div id="payment_method_child_container"><div class="form-group row">';
             html += '<label class="form-control-label col-sm-3">Date</label>';
             html += '<div class="col-sm-9">';
-            html += '<input class="form-control" type="text" value="'+moment().format("YYYY-MM-DD")+'" disabled name="date">'
+            html += '<input class="form-control" type="text" value="'+moment().format("YYYY-MM-DD")+'" readonly name="date">'
             html += '</div></div>';
 
             html += '<div class="form-group row">';
