@@ -1,3 +1,4 @@
+@if (Route::currentRouteName() == "admin.supplier.show")
 <!-- Supplier - Order Item -->
 <div class="modal fade in" tabindex="-1" role="dialog" id="order_item_modal">
     <div class="modal-dialog modal-lg" role="document">
@@ -60,6 +61,8 @@
         </div>
     </div>
 </div>
+@endif
+
 
 <!-- Transaction -->
 <div class="modal fade" tabindex="-1" role="dialog" id="deliver_item_modal">
