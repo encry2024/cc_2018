@@ -15,7 +15,11 @@ class CreateCashesTable extends Migration
     {
         Schema::create('cashes', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('payment_id')->unsigned();
+            $table->decimal('amount_paid', 18, 2);
+            $table->date('date_paid');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
