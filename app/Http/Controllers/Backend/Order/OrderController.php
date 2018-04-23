@@ -91,6 +91,6 @@ class OrderController extends Controller
             'bank'
         ));
 
-        // return redirect()->back();
+        return redirect()->back()->withFlashSuccess("You have successfully added a payment in Order Receipt #".$add_payment->id);
     }
 }
