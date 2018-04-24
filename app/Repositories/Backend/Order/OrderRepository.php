@@ -95,61 +95,66 @@ class OrderRepository extends BaseRepository
     {
         # Test Process
         return DB::transaction(function () use ($order, $data) {
-            $cash = new Cash;
-            $check = new Check;
+            $payment_method = $data["payment_dropdown"];
+            $cash           = new Cash;
+            $check          = new Check;
 
-            if ($cash->payment->create([
-                ''
-            ]))
+            if ($payment_method == "Cash") {
+                $payment = $cash->create([
+                    'user_id' => Auth::user()->id,
+                    'order_id' => $order->id,
+                    'date_paid' => date('Y-m-d')
+                ])->payment()->create(['amount_paid' => str_replace(",", "", $data['amount_received'])]);
+
+                if ($payment) {
+                    // Get Amount
+                    $order_balance     = $order->balance;
+                    $amount_received   = $payment->amount_paid;
+
+                    // Get remaining balance
+                    $remaining_balance = $order_balance - $amount_received;
+
+                    // If
+                    if ($remaining_balance <= 0) {
+                        $order->update(['balance' => 0, 'status' => 'PAID']);
+
+                        return $order;
+                    }
+
+                    // Do not update order status if not fully paid
+                    $order->update(['balance' => $remaining_balance]);
+
+                    return $order;
+                }
+            } else {
+                $payment = $check->create([
+                    'account_number' => $data['account_number'],
+                    'bank'           => $data['bank'],
+                    'date_of_claim'  => $data['date'],
+                    'type'           => $data['check_type'],
+                    'user_id'        => Auth::user()->id,
+                    'order_id'       => $order->id
+                ])->payment()->create(['amount_paid' => str_replace(",", "", $data['amount_received'])]);
+
+                if ($payment) {
+                    $order_balance     = $order->balance;
+                    $amount_received   = $payment->amount_paid;
+
+                    $remaining_balance = $order_balance - $amount_received;
+
+                    if ($remaining_balance <= 0) {
+                        $order->update(['balance' => 0, 'status' => 'PAID']);
+
+                        return $order;
+                    }
+
+                    $order->update(['balance' => $remaining_balance]);
+
+                    return $order;
+                }
+            }
 
             throw new GeneralException('Something went wrong when adding a payment to Order #'.$order->id);
         });
-        # Main Process
-        // return DB::transaction(function () use ($order, $data) {
-        //     $payment = $order->payments()->create([
-        //         'user_id' => Auth::user()->id,
-        //         'paymentable_type' => 'App\\Models\\Payment\\'.$data['payment_dropdown'].'\\'.$data['payment_dropdown']
-        //     ]);
-
-        //     if ($payment)
-
-        //     {
-        //         $payment_method = $data["payment_dropdown"];
-
-        //         if ($payment_method == "Cash") {
-        //             $paymentable = $payment->cashes()->create([
-        //                 'amount_paid'   => str_replace(",", "", $data['amount_received']),
-        //                 'date_paid'     => date('Y-m-d')
-        //             ]);
-
-        //             if ($paymentable)
-
-        //             {
-        //                 if ($payment->update(['paymentable_id' => $paymentable->id]))
-        //                 {
-        //                     return $order;
-        //                 }
-        //             }
-        //         } else {
-        //             $paymentable = $payment->checks()->create([
-        //                 'account_number' => $data['account_number'],
-        //                 'bank'           => $data['bank'],
-        //                 'amount_paid'    => str_replace(",", "", $data['amount_received']),
-        //                 'date_of_claim'  => $data['date'],
-        //                 'type'           => $data['check_type']
-        //             ]);
-
-        //             if ($payment) {
-
-        //                 if ($payment->update(['paymentable_id' => $paymentable->id]))
-        //                 {
-        //                     return $order;
-        //                 }
-        //             }
-        //         }
-        //     }
-
-        //     throw new GeneralException('Something went wrong when adding a payment to Order #'.$order->id);
-        // });
     }
 }
