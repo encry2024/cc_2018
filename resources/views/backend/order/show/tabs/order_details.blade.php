@@ -1,3 +1,6 @@
+@if ($model->status == "PAID")
+<div class="alert alert-success" style="margin-top: -2rem;">ORDER STATUS: PAID</div>
+@endif
 <!-- ORDER DETAILS -->
 <div class="row">
     <div class="col-lg-12">
