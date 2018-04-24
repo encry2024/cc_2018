@@ -14,7 +14,8 @@ class Cash extends Model
 
     protected $fillable = [
         'payment_id',
-        'amount_paid',
+        'user_id',
+        'order_id',
         'date_paid'
     ];
 }
