@@ -13,10 +13,10 @@ class Check extends Model
         CheckRelationship;
 
     protected $fillable = [
-        'payment_id',
+        'user_id',
+        'order_id',
         'account_number',
         'bank',
-        'amount_paid',
         'date_of_claim',
         'type'
     ];
