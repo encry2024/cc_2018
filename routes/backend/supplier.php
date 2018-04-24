@@ -7,6 +7,14 @@ Route::group([
     'namespace'  => 'Supplier',
 ], function () {
 
+    Route::group([
+        'namespace' => 'Request'
+    ], function () {
+
+        Route::resource('request', 'RequestController');
+
+    });
+
     Route::get('supplier/deleted', 'SupplierStatusController@getDeleted')->name('supplier.deleted');
     Route::get('supplier/{supplier}/item/cart', 'SupplierController@showCart')->name('supplier.cart');
     Route::get('supplier/queues', 'SupplierController@getSupplierQueuesCount')->name('supplier.queues');
@@ -17,5 +25,4 @@ Route::group([
         Route::get('delete', 'SupplierStatusController@delete')->name('supplier.delete-permanently');
         Route::get('restore', 'SupplierStatusController@restore')->name('supplier.restore');
     });
-
 });
