@@ -163,6 +163,7 @@
                         <th>Added by</th>
                         <th>Amount Received</th>
                         <th>Payment Method</th>
+                        <th>Status</th>
                         <th>Date Added</th>
                     </thead>
 
@@ -173,6 +174,7 @@
                                 <td>{{ $payment->paymentable->user->full_name }}</td>
                                 <td>PHP {{ number_format($payment->amount_paid, 2) }}</td>
                                 <td>{{ class_basename($payment->paymentable) }}</td>
+                                <td>{{ class_basename($payment->paymentable) == "Cash" ? "RECEIVED" : $payment->paymentable->status }}</td>
                                 <td>{{ date('F d, Y (h:i A)', strtotime($payment->created_at)) }}</td>
                             </tr>
                             @endif
