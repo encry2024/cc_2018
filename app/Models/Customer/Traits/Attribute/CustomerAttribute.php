@@ -8,6 +8,25 @@ namespace App\Models\Customer\Traits\Attribute;
 trait CustomerAttribute
 {
     /**
+     * Displays usable credit
+     *
+     * @return string $usable_credit
+     */
+    public function getUsableCreditAttribute()
+    {
+        $used_credit    = 0;
+        $usable_credit  = 0;
+
+        foreach ($this->orders->where('status', 'PENDING') as $order) {
+            $used_credit += $order->balance;
+        }
+
+        $usable_credit = $this->credit_limit - $used_credit;
+
+        return $usable_credit;
+    }
+
+    /**
      * Displays overall credit from all unpaid order of the customer
      *
      * @return string $current_credit

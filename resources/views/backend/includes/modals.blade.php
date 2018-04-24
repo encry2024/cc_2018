@@ -146,6 +146,44 @@
 </div>
 
 @if (Route::currentRouteName() == "admin.order.show")
+<!-- Payment History -->
+<div class="modal fade" tabindex="-1" role="dialog" id="payment_history_modal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Payment History</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                        <th>Added by</th>
+                        <th>Amount Received</th>
+                        <th>Payment Method</th>
+                        <th>Date Added</th>
+                    </thead>
+
+                    <tbody>
+                        @foreach ($payments as $payment)
+                            @if (count($payment->paymentable) != 0)
+                            <tr>
+                                <td>{{ $payment->paymentable->user->full_name }}</td>
+                                <td>PHP {{ number_format($payment->amount_paid, 2) }}</td>
+                                <td>{{ class_basename($payment->paymentable) }}</td>
+                                <td>{{ date('F d, Y (h:i A)', strtotime($payment->created_at)) }}</td>
+                            </tr>
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Add Payment Modal -->
 <form class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="add_payment_modal" action="{{ route('admin.order.add_payment', $model->id) }}" method="POST">
     {{ csrf_field() }}

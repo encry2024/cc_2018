@@ -26,6 +26,7 @@
                                     <th>Order #</th>
                                     <th>Customer Name</th>
                                     <th>Issued by</th>
+                                    <th>Balance</th>
                                     <th>Collection Date</th>
                                     <th>Payment Type</th>
                                     <th>{{ __('labels.backend.suppliers.table.created_at') }}</th>
@@ -39,10 +40,11 @@
                                     <td>{{ $order->id }}</td>
                                     <td>{{ $order->customer->name }}</td>
                                     <td>{{ $order->user->full_name }}</td>
+                                    <td>{!! $order->status != "PAID" ? $order->remaining_balance : "<label class='badge badge-success' style='font-size: 13px;'>Paid</label>" !!}</td>
                                     <td>{{ date('F d, Y', strtotime($order->collection_date)) }}</td>
                                     <td>{{ $order->payment_method }}</td>
-                                    <td>{{ date('F d, Y (h:i A)', strtotime($order->created_at)) }}</td>
-                                    <td>{{ date('F d, Y (h:i A)', strtotime($order->updated_at)) }}</td>
+                                    <td>{{ date('F d, Y', strtotime($order->created_at)) }}</td>
+                                    <td>{{ date('F d, Y', strtotime($order->updated_at)) }}</td>
                                     <td>{!! $order->action_buttons !!}</td>
                                 </tr>
                             @endforeach

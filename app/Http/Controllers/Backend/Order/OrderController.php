@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 # Models
 use App\Models\Customer\Customer;
 use App\Models\Order\Order;
+use App\Models\Payment\Payment\Payment;
 # Requests
 use App\Http\Requests\Backend\Order\ManageOrderRequest;
 use App\Http\Requests\Backend\Order\EditOrderRequest;
@@ -14,15 +15,18 @@ use App\Http\Requests\Backend\Order\UpdateOrderRequest;
 use App\Http\Requests\Backend\Order\AddPaymentRequest;
 # Repository
 use App\Repositories\Backend\Order\OrderRepository;
+use App\Repositories\Backend\Payment\PaymentRepository;
 use App\Http\Requests\Backend\Customer\ManageCustomerRequest;
 
 class OrderController extends Controller
 {
     protected $orderRepository;
+    protected $paymentRepository;
 
-    public function __construct(OrderRepository $orderRepository)
+    public function __construct(OrderRepository $orderRepository, PaymentRepository $paymentRepository)
     {
         $this->orderRepository = $orderRepository;
+        $this->paymentRepository = $paymentRepository;
     }
 
     /**
@@ -43,7 +47,8 @@ class OrderController extends Controller
      */
     public function show(Order $order, ManageOrderRequest $request)
     {
-        return view('backend.order.show')->withModel($order);
+        return view('backend.order.show')->withModel($order)
+            ->withPayments($this->paymentRepository->getPaymentPaginated($order->id));
     }
 
     /**
@@ -55,18 +60,6 @@ class OrderController extends Controller
     public function edit(Order $order, EditOrderRequest $request)
     {
         return view('backend.order.show')->withModel($order);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateOrderRequest $request, Order $order)
-    {
-        //
     }
 
     /**

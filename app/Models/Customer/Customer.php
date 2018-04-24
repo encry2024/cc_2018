@@ -18,5 +18,5 @@ class Customer extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $appends = ['current_credit', 'progress_credit'];
+    protected $appends = ['current_credit', 'progress_credit', 'usable_credit'];
 }

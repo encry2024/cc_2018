@@ -13,9 +13,8 @@ class Payment extends Model
         PaymentRelationship;
 
     protected $fillable = [
-        'user_id',
-        'order_id',
         'paymentable_id',
-        'paymentable_type'
+        'paymentable_type',
+        'amount_paid'
     ];
 }

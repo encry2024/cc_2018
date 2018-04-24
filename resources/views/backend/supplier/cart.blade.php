@@ -39,7 +39,7 @@
                                     <td><input type="checkbox" value="{{ $queue->id }}" name="item_order_id[]"></td>
                                     <td>{{ $queue->id }}</td>
                                     <td>{{ $queue->item->name }}</td>
-                                    <td>{{ $queue->quantity }} kg</td>
+                                    <td>{{ number_format($queue->quantity, 2) }} kg</td>
                                     <td>PHP {{ number_format($queue->total_price, 2) }}</td>
                                     <td>{{ date('F d, Y - h:i A', strtotime($queue->created_at)) }}</td>
                                 </tr>

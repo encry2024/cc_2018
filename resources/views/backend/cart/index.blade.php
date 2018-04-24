@@ -7,8 +7,6 @@
 @endsection
 
 @section('content')
-    
-
     <div class="card">
         <div class="card-body">
             <div class="row">
@@ -39,7 +37,7 @@
                                 <tr>
                                     <td>{!! $cart->status == 'QUEUE' ? '<label class="badge badge-dark" style="font-size:10px;">QUEUE</label>' : '<label class="badge badge-info" style="font-size:10px;">'.$cart->status.'</label>' !!}</td>
                                     <td>{{ $cart->item->name }}</td>
-                                    <td>{{ $cart->quantity }}</td>
+                                    <td>{{ number_format($cart->quantity, 2) }} kg</td>
                                     <td>{{ $cart->supplier->name }}</td>
                                     <td>{{ $cart->created_at }}</td>
                                     <td>{!! $cart->action_buttons !!}</td>
