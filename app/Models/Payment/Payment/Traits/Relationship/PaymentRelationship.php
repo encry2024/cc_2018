@@ -11,14 +11,4 @@ trait PaymentRelationship
     {
         return $this->morphTo();
     }
-
-    public function cashes()
-    {
-        return $this->hasMany(Cash::class);
-    }
-
-    public function checks()
-    {
-        return $this->hasMany(Check::class);
-    }
 }
