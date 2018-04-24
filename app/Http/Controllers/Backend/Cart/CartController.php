@@ -58,12 +58,30 @@ class CartController extends Controller
         $this->cartRepository->update($cart);
 
         if ($cart->status == "REQUESTED") {
-            return redirect()->back()->withFlashSuccess("You have requested <strong>". $cart->quantity .' '. $cart->item->final_weight_type ."</strong> of '". $cart->item->name."' from supplier ". $cart->supplier->name .".");
+            return redirect()->back()->withFlashSuccess("You have requested <strong>". number_format($cart->quantity, 2) .' '. $cart->item->final_weight_type ."</strong> of '". $cart->item->name."' from supplier ". $cart->supplier->name .".");
         } elseif ($cart->status == "RECEIVED") {
-            return redirect()->back()->withFlashSuccess("You have received ". $cart->quantity .' '. $cart->item->final_weight_type ." of '". $cart->item->name."' from supplier <strong>". $cart->supplier->name ."</strong>.");
+            return redirect()->back()->withFlashSuccess("You have received ". number_format($cart->quantity, 2) .' '. $cart->item->final_weight_type ." of '". $cart->item->name."' from supplier <strong>". $cart->supplier->name ."</strong>.");
         }
     }
 
+    /**
+     * Delete item on cart where status = QUEUE
+     *
+     * @param Cart              $cart    object.
+     * @param ManageCartRequest $request validate user's role.
+     *
+     * @return object
+     */
+    public function destroy(Cart $cart, ManageCartRequest $request)
+    {
+        $cart = $this->cartRepository->deleteById($cart->id);
+
+        return redirect()->route('admin.item.deleted')->withFlashSuccess('Item was removed from the cart.');
+    }
+
+    /**
+     * Get items on cart where status = QUEUE
+     */
     public function getCartQueues()
     {
         $cart_queues_count = DB::table('carts')
