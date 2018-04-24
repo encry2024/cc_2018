@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
 use App\Models\Order\Order;
 use App\Models\Payment\Payment\Payment;
+use App\Models\Payment\Check\Check;
 # Requests
 use App\Http\Requests\Backend\Order\ManageOrderRequest;
 use App\Http\Requests\Backend\Order\EditOrderRequest;
@@ -85,5 +86,27 @@ class OrderController extends Controller
         ));
 
         return redirect()->back()->withFlashSuccess("You have successfully added a payment in Order Receipt #".$add_payment->id);
+    }
+
+    public function updateCheck(Payment $payment, Check $check, ManageOrderRequest $request)
+    {
+        $update_check = $check->update(['status' => 'RECEIVED']);
+
+        if ($update_check) {
+            $amount_received = $payment->amount_paid;
+            $order_balance = $check->order->balance;
+
+            $remaining_balance = $order_balance - $amount_received;
+
+            if ($remaining_balance <= 0) {
+                $check->order->update(['balance' => 0, 'status' => 'PAID']);
+
+                return redirect()->back()->withFlashSuccess("Order #".$check->order->id." is now fully paid.");
+            }
+
+            if ($check->order->update(['balance' => $remaining_balance])) {
+                return redirect()->back()->withFlashSuccess("You have received an amount of PHP ".number_format($check->payment->amount_paid, 2)." from [Post-Dated Check: ".$check->account_number."] and was deducted to Order's balance.");
+            }
+        }
     }
 }
