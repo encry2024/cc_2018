@@ -1,26 +1,27 @@
 <script>
-    const stocks_field           = $("#stocks"),
-        selling_price_field      = $("#selling_price"),
-        total_price_field        = $("#total_price"),
-        date_field               = $("#date"),
-        total_cost_label         = $("#total_cost_label");
-        customer_order_container = $("#customer_order_container"),
-        payment_type             = $("#payment_type_dropdown"),
-        requested_quantity_field = $("#requested_quantity");
+    const stocks_field       = $("#stocks"),
+    selling_price_field      = $("#selling_price"),
+    total_price_field        = $("#total_price"),
+    date_field               = $("#date"),
+    total_cost_label         = $("#total_cost_label");
+    customer_order_container = $("#customer_order_container"),
+    payment_type             = $("#payment_type_dropdown"),
+    requested_quantity_field = $("#requested_quantity");
 
-    let item_weight         = 0,
-        item_selling_price  = 0,
-        requested_quantity  = 0,
-        item_id             = 0,
-        total_price         = 0,
-        date                = null,
-        item_name           = null,
-        html                = null,
-        customer_orders     = [],
-        item_id_list        = [],
-        selected_item       = [],
-        collection_date     = null,
-        payment_value       = null;
+    let item_weight     = 0,
+    item_selling_price  = 0,
+    requested_quantity  = 0,
+    item_id             = 0,
+    total_price         = 0,
+    remaining_credit    = 0,
+    customer_orders     = [],
+    item_id_list        = [],
+    selected_item       = [],
+    date                = null,
+    item_name           = null,
+    html                = null,
+    collection_date     = null,
+    payment_value       = null;
 
     function getPaymentValue(value)
     {
@@ -88,7 +89,7 @@
                 html += "</tr>";
 
                 $("#item_count").text(item_id_list.count());
-                displayTotalCost();
+                total_cost_label.text(Number(displayTotalCost()).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
 
                 customer_order_container.append(html);
                 html = "";
@@ -150,7 +151,19 @@
                             console.log(selectedItemArray);
                         }
                         // Recompute total cost.
-                        displayTotalCost();
+                        total_cost_label.text(Number(displayTotalCost()).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+
+                        let credit_cost = displayTotalCost();
+                        let usable_credit = "{{ number_format($customer->usable_credit, 2) }}";
+
+                        if (credit_cost != 0) {
+                            remaining_credit = parseFloat(usable_credit - credit_cost);
+
+                            $("#usable_credit").val(Number(remaining_credit).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+                        } else {
+                            $("#usable_credit").val("{{ number_format($customer->usable_credit, 2) }}");
+                        }
+
                         swal('Selected Items was successfully removed from the list.', '', 'success');
                         console.log("---------------DISPLAYING DATA FROM SELECTED ITEM ARRAY AFTER DELETION");
                         console.log(selected_item);
@@ -187,9 +200,9 @@
         });
 
         $("#payment_type_dropdown").on("change", function () {
-            let type = $(this);
-            const day_term_container = $("#day_term_container");
-            payment_value = null;
+            let type                    = $(this);
+            const day_term_container    = $("#day_term_container");
+            payment_value               = null;
 
             if (type.val() == "term") {
                 day_term_container.append('<input type="text" class="form-control numeric-input col-sm-8" style="margin-left: 11.85rem; width: 65%;" placeholder="Day(s) Term" id="day_term" onkeyup="getPaymentValue($(this).val())">');
@@ -283,21 +296,31 @@
                         type: 'warning'
                     });
                 } else {
-                    customer_orders.push({
-                        item_id: item_id,
-                        requested_quantity: requested_quantity,
-                        total_cost: total_price,
-                        delivery_date: date
-                    });
+                    if (computeRemainingUsableCredit()) {
+                        customer_orders.push({
+                            item_id: item_id,
+                            requested_quantity: requested_quantity,
+                            total_cost: total_price,
+                            delivery_date: date
+                        });
 
-                    item_id_list.push(
-                        item_id
-                    );
+                        item_id_list.push(
+                            item_id
+                        );
 
-                    console.log("---------------AN ITEM WAS PUSHED TO THE CUSTOMER ORDERS ARRAY---------------");
-                    console.log(customer_orders);
+                        $("#usable_credit").val(Number(remaining_credit).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
 
-                    return true;
+                        console.log("---------------AN ITEM WAS PUSHED TO THE CUSTOMER ORDERS ARRAY---------------");
+                        console.log(customer_orders);
+
+                        return true;
+                    } else {
+                        swal({
+                            title: 'Insufficient Usable Credit.',
+                            confirmButtonText: 'Ok',
+                            type: 'warning'
+                        });
+                    }
                 }
             }
         }
@@ -327,7 +350,7 @@
 
         function submitDataRequest(requests, collection_date)
         {
-            balance = displayTotalCost();
+            balance = total_cost_label.text(Number(displayTotalCost()).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
 
             $.ajax({
                 type: "POST",
@@ -373,7 +396,20 @@
                 total_cost += parseFloat(data.total_cost);
             }
 
-            return total_cost_label.text(Number(total_cost).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+            return total_cost;
+        }
+
+        function computeRemainingUsableCredit()
+        {
+            let usable_credit = $("#usable_credit").val();
+
+            remaining_credit = parseFloat(usable_credit - total_price);
+
+            if (remaining_credit > 0) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
         function reinitializeCleave()
