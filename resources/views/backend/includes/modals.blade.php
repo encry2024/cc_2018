@@ -165,6 +165,7 @@
                         <th>Payment Method</th>
                         <th>Status</th>
                         <th>Date Added</th>
+                        <th>Action</th>
                     </thead>
 
                     <tbody>
@@ -176,6 +177,17 @@
                                 <td>{{ class_basename($payment->paymentable) }}</td>
                                 <td>{{ class_basename($payment->paymentable) == "Cash" ? "RECEIVED" : $payment->paymentable->status }}</td>
                                 <td>{{ date('F d, Y (h:i A)', strtotime($payment->created_at)) }}</td>
+                                <td>
+                                    @if (class_basename($payment->paymentable) != "Cash")
+                                        @if (($payment->paymentable->type == "post-dated" && $payment->paymentable->status == "PENDING"))
+                                            <a class="btn btn-sm btn-success text-white" data-toggle="tooltip" title="Received" name="receive_payment_btn"><i class="fa fa-edit"></i></a>
+                                            <form action="{{ route('admin.order.update_check', ['payment' => $payment->id, 'check' => $payment->paymentable->id]) }}" method="POST" id="check_status_form">
+                                                {{ method_field("PATCH") }}
+                                                {{ csrf_field() }}
+                                            </form>
+                                        @endif
+                                    @endif
+                                </td>
                             </tr>
                             @endif
                         @endforeach
