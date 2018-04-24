@@ -89,6 +89,7 @@
                 html += "</tr>";
 
                 $("#item_count").text(item_id_list.count());
+                console.log(displayTotalCost());
                 total_cost_label.text(Number(displayTotalCost()).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
 
                 customer_order_container.append(html);
@@ -154,7 +155,7 @@
                         total_cost_label.text(Number(displayTotalCost()).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
 
                         let credit_cost = displayTotalCost();
-                        let usable_credit = "{{ number_format($customer->usable_credit, 2) }}";
+                        let usable_credit = "{{ $customer->usable_credit }}";
 
                         if (credit_cost != 0) {
                             remaining_credit = parseFloat(usable_credit - credit_cost);
@@ -308,7 +309,10 @@
                             item_id
                         );
 
-                        $("#usable_credit").val(Number(remaining_credit).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+                        let credit = parseFloat("{{ $customer->usable_credit }}");
+                        credit = parseFloat(credit - displayTotalCost());
+
+                        $("#usable_credit").val(Number(credit).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
 
                         console.log("---------------AN ITEM WAS PUSHED TO THE CUSTOMER ORDERS ARRAY---------------");
                         console.log(customer_orders);
@@ -337,7 +341,6 @@
             item_weight         = 0;
             item_selling_price  = 0;
             date                = null;
-
 
             // Clear Input Fields
             stocks_field.val("");
@@ -388,7 +391,7 @@
 
         function displayTotalCost()
         {
-            let total_cost = 0;
+            let total_cost          = 0;
 
             for (let i=0 ; i<customer_orders.length ; i++) {
                 let data = customer_orders[i];
@@ -401,9 +404,9 @@
 
         function computeRemainingUsableCredit()
         {
-            let usable_credit = $("#usable_credit").val();
+            let usable_credit = "{{ $customer->usable_credit }}";
 
-            remaining_credit = parseFloat(usable_credit - total_price);
+            remaining_credit = parseFloat(usable_credit - displayTotalCost());
 
             if (remaining_credit > 0) {
                 return true;

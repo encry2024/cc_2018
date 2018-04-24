@@ -46275,6 +46275,18 @@ $(function () {
         }).then(function (result) {
             result.value && form.submit();
         });
+    }).on('click', 'a[name=receive_payment_btn]', function () {
+        var form = $("#check_status_form");
+
+        swal({
+            title: "Change check's status to received?",
+            showCancelButton: true,
+            confirmButtonText: "Update",
+            cancelButtonText: "Cancel",
+            type: 'warning'
+        }).then(function (result) {
+            result.value && form.submit();
+        });
     }).on('click', 'a[name=confirm_item]', function (e) {
         /**
          * Generic 'are you sure' confirm box
