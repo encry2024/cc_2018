@@ -7,6 +7,7 @@ use App\Models\Item\Item;
 use App\Models\ItemOrder\ItemOrder;
 use App\Models\Customer\Customer;
 use App\Models\Auth\User;
+use App\Models\Payment\Payment\Payment;
 
 trait OrderRelationship
 {
@@ -28,5 +29,10 @@ trait OrderRelationship
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 }

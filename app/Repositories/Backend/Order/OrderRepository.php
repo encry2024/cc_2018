@@ -18,6 +18,9 @@ use App\Repositories\BaseRepository;
 use App\Models\Customer\Customer;
 use App\Models\Order\Order;
 use App\Models\Item\Item;
+use App\Models\Payment\Payment\Payment;
+use App\Models\Payment\Cash\Cash;
+use App\Models\Payment\Check\Check;
 
 /**
  * Class OrderRepository.
@@ -90,6 +93,63 @@ class OrderRepository extends BaseRepository
 
     public function addPayment(Order $order, $data) : Order
     {
-        // return;
+        # Test Process
+        return DB::transaction(function () use ($order, $data) {
+            $cash = new Cash;
+            $check = new Check;
+
+            if ($cash->payment->create([
+                ''
+            ]))
+
+            throw new GeneralException('Something went wrong when adding a payment to Order #'.$order->id);
+        });
+        # Main Process
+        // return DB::transaction(function () use ($order, $data) {
+        //     $payment = $order->payments()->create([
+        //         'user_id' => Auth::user()->id,
+        //         'paymentable_type' => 'App\\Models\\Payment\\'.$data['payment_dropdown'].'\\'.$data['payment_dropdown']
+        //     ]);
+
+        //     if ($payment)
+
+        //     {
+        //         $payment_method = $data["payment_dropdown"];
+
+        //         if ($payment_method == "Cash") {
+        //             $paymentable = $payment->cashes()->create([
+        //                 'amount_paid'   => str_replace(",", "", $data['amount_received']),
+        //                 'date_paid'     => date('Y-m-d')
+        //             ]);
+
+        //             if ($paymentable)
+
+        //             {
+        //                 if ($payment->update(['paymentable_id' => $paymentable->id]))
+        //                 {
+        //                     return $order;
+        //                 }
+        //             }
+        //         } else {
+        //             $paymentable = $payment->checks()->create([
+        //                 'account_number' => $data['account_number'],
+        //                 'bank'           => $data['bank'],
+        //                 'amount_paid'    => str_replace(",", "", $data['amount_received']),
+        //                 'date_of_claim'  => $data['date'],
+        //                 'type'           => $data['check_type']
+        //             ]);
+
+        //             if ($payment) {
+
+        //                 if ($payment->update(['paymentable_id' => $paymentable->id]))
+        //                 {
+        //                     return $order;
+        //                 }
+        //             }
+        //         }
+        //     }
+
+        //     throw new GeneralException('Something went wrong when adding a payment to Order #'.$order->id);
+        // });
     }
 }

@@ -15,7 +15,14 @@ class CreateChecksTable extends Migration
     {
         Schema::create('checks', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('payment_id')->unsigned();
+            $table->string('account_number');
+            $table->string('bank');
+            $table->decimal('amount_paid', 18, 2);
+            $table->date('date_of_claim');
+            $table->string('type');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
