@@ -1,5 +1,15 @@
 <div class="row">
     <div class="col-lg-12">
+    <h5 class="card-title">CUSTOMER CURRENT USABLE CREDIT</h5>
+        <hr>
+        <div class="form-group row">
+            {{ html()->label('USABLE CREDIT')->class('col-md-4 form-control-label')->for('usable_credit') }}
+            <div class="input-group-prepend col-sm-8">
+                <span class="input-group-text">PHP</span>
+                <input type="string" class="form-control" value="{{ number_format($customer->usable_credit, 2) }}" id="usable_credit" disabled>
+            </div><!--col-sm-8-->
+        </div><!--form-group-->
+        <br>
         <h5 class="card-title">MENU</h5>
         <hr>
         <div class="form-group row">
