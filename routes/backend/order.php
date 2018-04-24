@@ -7,6 +7,8 @@ Route::group([
 
     Route::get('order/deleted', 'OrderStatusController@getDeleted')->name('order.deleted');
 
+    Route::patch('order/payment/{payment}/check/{check}/update_status', 'OrderController@updateCheck')->name('order.update_check');
+
     Route::resource('order', 'OrderController');
 
     Route::group(['prefix' => 'order/{deletedOrder}'], function () {
