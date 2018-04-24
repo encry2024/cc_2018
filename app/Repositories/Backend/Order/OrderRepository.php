@@ -127,30 +127,38 @@ class OrderRepository extends BaseRepository
                     return $order;
                 }
             } else {
+                $status = $data['check_type'] == "dated" ? "RECEIVED" : "PENDING";
+
                 $payment = $check->create([
                     'account_number' => $data['account_number'],
                     'bank'           => $data['bank'],
                     'date_of_claim'  => $data['date'],
                     'type'           => $data['check_type'],
+                    'status'         => $status,
                     'user_id'        => Auth::user()->id,
                     'order_id'       => $order->id
-                ])->payment()->create(['amount_paid' => str_replace(",", "", $data['amount_received'])]);
+                ])
+                ->payment()->create(['amount_paid' => str_replace(",", "", $data['amount_received'])]);
 
                 if ($payment) {
-                    $order_balance     = $order->balance;
-                    $amount_received   = $payment->amount_paid;
+                    if ($payment->type == "dated") {
+                        $order_balance     = $order->balance;
+                        $amount_received   = $payment->amount_paid;
 
-                    $remaining_balance = $order_balance - $amount_received;
+                        $remaining_balance = $order_balance - $amount_received;
 
-                    if ($remaining_balance <= 0) {
-                        $order->update(['balance' => 0, 'status' => 'PAID']);
+                        if ($remaining_balance <= 0) {
+                            $order->update(['balance' => 0, 'status' => 'PAID']);
+
+                            return $order;
+                        }
+
+                        $order->update(['balance' => $remaining_balance]);
 
                         return $order;
+                    } else {
+                        return $order;
                     }
-
-                    $order->update(['balance' => $remaining_balance]);
-
-                    return $order;
                 }
             }
 

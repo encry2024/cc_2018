@@ -18,6 +18,7 @@ class Check extends Model
         'account_number',
         'bank',
         'date_of_claim',
-        'type'
+        'type',
+        'status'
     ];
 }

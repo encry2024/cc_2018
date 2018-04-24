@@ -14,7 +14,7 @@ class AddStatusOnChecksTable extends Migration
     public function up()
     {
         Schema::table('checks', function (Blueprint $table) {
-            //
+            $table->string('status')->after('type');
         });
     }
 
@@ -26,7 +26,7 @@ class AddStatusOnChecksTable extends Migration
     public function down()
     {
         Schema::table('checks', function (Blueprint $table) {
-            //
+            $table->dropColumn('status');
         });
     }
 }

@@ -11,3 +11,4 @@ require __DIR__.'/general/customer.php';
 require __DIR__.'/general/transaction.php';
 require __DIR__.'/general/cart.php';
 require __DIR__.'/general/order.php';
+require __DIR__.'/general/request.php';

@@ -25,6 +25,10 @@
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/order*')) }}" href="{{ route('admin.order.index') }}"><i class="fa fa-clipboard"></i> Orders</a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/request*')) }}" href="{{ route('admin.request.index') }}"><i class="fa fa-refresh"></i> Requests</a>
+            </li>
+
             <li class="nav-title">
                 {{ __('menus.backend.sidebar.system') }}
             </li>
