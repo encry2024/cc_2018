@@ -141,7 +141,7 @@ class OrderRepository extends BaseRepository
                 ->payment()->create(['amount_paid' => str_replace(",", "", $data['amount_received'])]);
 
                 if ($payment) {
-                    if ($payment->type == "dated") {
+                    if ($payment->paymentable->status == "RECEIVED") {
                         $order_balance     = $order->balance;
                         $amount_received   = $payment->amount_paid;
 
