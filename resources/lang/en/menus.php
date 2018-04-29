@@ -14,6 +14,15 @@ return [
     */
 
     'backend' => [
+        'expenses'  =>  [
+            'title'     =>  'Expense',
+            'all'       =>  'Expenses',
+            'main'      =>  'Expense',
+            'create'    =>  'Create Expense',
+            'edit'      =>  'Edit Expense',
+            'deleted'   =>  'Deleted Expenses',
+        ],
+
         'carts'  =>  [
             'title'     =>  'Item Cart',
 

@@ -88,11 +88,17 @@ class OrderController extends Controller
         return redirect()->back()->withFlashSuccess("You have successfully added a payment in Order Receipt #".$add_payment->id);
     }
 
+    /**
+     * Update Check is for Post-Dated Checks only.
+     */
     public function updateCheck(Payment $payment, Check $check, ManageOrderRequest $request)
     {
         $update_check = $check->update(['status' => 'RECEIVED']);
 
         if ($update_check) {
+            // If update check return true; Create cashflow.
+            $payment->cashflow()->create(['amount' => $payment->amount_paid]);
+
             $amount_received = $payment->amount_paid;
             $order_balance = $check->order->balance;
 
@@ -105,7 +111,7 @@ class OrderController extends Controller
             }
 
             if ($check->order->update(['balance' => $remaining_balance])) {
-                return redirect()->back()->withFlashSuccess("You have received an amount of PHP ".number_format($check->payment->amount_paid, 2)." from [Post-Dated Check: ".$check->account_number."] and was deducted to Order's balance.");
+                return redirect()->back()->withFlashSuccess("You have received an amount of PHP ".number_format($check->payment[0]->amount_paid, 2)." from [Post-Dated Check: ".$check->account_number."] and was deducted to Order's balance.");
             }
         }
     }

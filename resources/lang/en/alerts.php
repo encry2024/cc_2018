@@ -14,6 +14,14 @@ return [
     */
 
     'backend' => [
+        'expenses' =>  [
+            'created'   =>  'Expense Code: \':expense\' was successfully created.',
+            'deleted'   =>  'Expense Code: \':expense\' was successfully deleted.',
+            'updated'   =>  'Expense Code: \':expense\' was successfully updated',
+            'restored'  =>  'Expense Code: \':expense\' was successfully restored.',
+            'deleted_permanently'   =>  'Expense Code: \':expense\' was successfully deleted permanently.',
+        ],
+
         'transactions' =>  [
             'created'   =>  'Transaction ID# \':transaction\' was successfully created.',
             'deleted'   =>  'Transaction ID# \':transaction\' was successfully deleted.',

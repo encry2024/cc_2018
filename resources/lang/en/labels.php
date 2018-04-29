@@ -33,6 +33,48 @@ return [
     ],
 
     'backend' => [
+        'expenses' => [
+            'view'       =>  'View Expenses',
+            'list'       =>  'List of Expenses',
+            'create'     =>  'Create Expense',
+            'deleted'    =>  'Deleted Expenses',
+            'management' =>  'Expense Management',
+
+            'table' =>  [
+                'code'          =>  'Expense Code',
+                'user'          =>  'Issuer',
+                'requested_by'  =>  'Issued to',
+                'cause'         =>  'Cause',
+                'amount'        =>  'Amount',
+                'created_at'    =>  'Date Created',
+                'deleted_at'    =>  'Date Deleted',
+                'updated_at'     =>  'Date Updated',
+                'total'         =>  'Expense total|Expenses total'
+            ],
+
+            'tabs'  =>  [
+                'titles'    =>  [
+                    'overview'  =>  'Overview'
+                ],
+
+                'content'   =>  [
+                    'overview'  =>  [
+                        'code'          =>  'Expense Code',
+                        'user'          =>  'Issuer',
+                        'cause'         =>  'Cause',
+                        'requested_by'  =>  'Issued to',
+                        'amount'        =>  'Amount',
+                        'created_at'    =>  'Date Created',
+                        'updated_at'    =>  'Date Updated',
+                        'deleted_at'    =>  'Date Deleted',
+                    ]
+                ]
+            ],
+
+            'show'  =>  'Expense :expense',
+            'view'  =>  ':expense'
+        ],
+
         'carts' => [
             'management'    =>  'Item Cart',
             'supplier'      =>  'Supplier',
@@ -139,7 +181,7 @@ return [
 
             'show'  =>  'Show :customer'
         ],
-        
+
         'items'  =>  [
             'create'    =>  'Create Item',
             'edit'      =>  'Edit :item',

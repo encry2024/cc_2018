@@ -38,7 +38,7 @@
 
                                     <div class="input-group col-sm-7">
                                         <input type="text" class="form-control input-sm numeric-input" name="requested_quantity">
-                                        <span class="input-group-prepend input-group-text" id="weight_label"></span>
+                                        <span class="input-group-prepend input-group-text" id="weight_label">kg</span>
                                     </div>
                                 </div><!--form-group-->
 

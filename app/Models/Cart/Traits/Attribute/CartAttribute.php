@@ -25,7 +25,7 @@ trait CartAttribute
         elseif ($this->status == "REQUESTED") {
             return
             '<a href="'.route('admin.cart.update', $this).'"
-                class="btn btn-success btn-xs"
+                class="btn btn-success btn-xs text-white"
                 data-method="patch"
                 data-trans-button-cancel="Cancel"
                 data-trans-button-confirm="Received"

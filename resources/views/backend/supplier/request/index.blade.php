@@ -13,11 +13,7 @@
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0">
                         {{ __('labels.backend.suppliers.management') }} <small class="text-muted">{{ __('labels.backend.suppliers.list') }}</small>
-                    </h4>
-                </div><!--col-->
-
-                <div class="col-sm-7">
-                    @include('backend.supplier.includes.header-buttons')
+                    </h4><!--card-title-->
                 </div><!--col-->
             </div><!--row-->
 
@@ -50,9 +46,10 @@
                             @endforeach
                             </tbody>
                         </table>
-                    </div>
+                    </div><!--table-responsive-->
                 </div><!--col-->
             </div><!--row-->
+
             <div class="row">
                 <div class="col-7">
                     <div class="float-left">

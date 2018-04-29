@@ -107,6 +107,9 @@ class OrderRepository extends BaseRepository
                 ])->payment()->create(['amount_paid' => str_replace(",", "", $data['amount_received'])]);
 
                 if ($payment) {
+                    // Add to Cashflow
+                    $payment->cashflow()->create(['amount' => $payment->amount_paid]);
+
                     // Get Amount
                     $order_balance     = $order->balance;
                     $amount_received   = $payment->amount_paid;
@@ -142,6 +145,8 @@ class OrderRepository extends BaseRepository
 
                 if ($payment) {
                     if ($payment->paymentable->status == "RECEIVED") {
+                        $payment->cashflow()->create(['amount' => $payment->amount_paid]);
+
                         $order_balance     = $order->balance;
                         $amount_received   = $payment->amount_paid;
 

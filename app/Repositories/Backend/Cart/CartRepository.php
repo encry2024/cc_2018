@@ -107,13 +107,14 @@ class CartRepository extends BaseRepository
                 }
             } elseif ($cart->status == "REQUESTED") {
                 if ($cart->update(['status' => 'RECEIVED'])) {
+                    $cart->cashflow()->create(['amount' => $cart->total_price]);
                     # Item's final weight as stocks
                     $item_stocks    = $cart->item->final_weight;
                     # Stocks from Carts table
                     $ordered_stocks = $cart->quantity;
                     # Total of Item Stocks + Ordered Stocks
                     $total_stocks   = $item_stocks + $ordered_stocks;
-                    
+
                     if ($cart->item->update(['final_weight' => $total_stocks])) {
                         return $cart;
                     }
