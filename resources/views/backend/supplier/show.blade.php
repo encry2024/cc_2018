@@ -26,10 +26,6 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#transactions" role="tab" aria-controls="transaction" aria-expanded="true"><i class="fa fa-clone"></i> {{ __('labels.backend.suppliers.tabs.titles.transaction') }}</a>
-                        </li>
-
-                        <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#products" role="tab" aria-controls="product" aria-expanded="true"><i class="fa fa-archive" aria-hidden="true"></i> {{ __('labels.backend.suppliers.tabs.titles.products') }}</a>
                         </li>
                     </ul>
@@ -37,10 +33,6 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="overview" role="tabpanel" aria-expanded="true">
                             @include('backend.supplier.show.tabs.overview')
-                        </div><!--tab-->
-
-                        <div class="tab-pane" id="transactions" role="tabpanel" aria-expanded="true">
-                            @include('backend.supplier.show.tabs.transaction')
                         </div><!--tab-->
 
                         <div class="tab-pane" id="products" role="tabpanel" aria-expanded="true">
@@ -84,7 +76,7 @@
                 item_selling_price  = $(this).data('item-selling_price'),
                 item_weight_type    = $(this).data('item-initial_weight_type');
 
-                selling_price = item_selling_price.replace(",", "");
+                selling_price = item_selling_price;
 
                 selling_price_label.text("PHP " + Number(item_selling_price).toLocaleString(undefined, {minimumFractionDigits: 2}));
                 item_name_label.text(item_name);
