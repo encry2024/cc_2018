@@ -1,6 +1,6 @@
 @extends ('backend.layouts.app')
 
-@section ('title', __('labels.backend.items.management') . ' | ' . __('labels.backend.items.view'))
+@section ('title', __('labels.backend.items.management') . ' | ' . __('labels.backend.items.view', ['item' => $item->name]))
 
 @section('breadcrumb-links')
     @include('backend.item.includes.breadcrumb-links')
