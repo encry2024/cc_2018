@@ -14,6 +14,14 @@ return [
     */
 
     'backend' => [
+        'expenses'  =>  [
+            'cant_restore'          => 'This expense is not deleted so it can not be restored.',
+            'create_error'          => 'There was a problem creating this expense. Please try again.',
+            'delete_error'          => 'There was a problem deleting this expense. Please try again.',
+            'delete_first'          => 'This expense must be deleted first before it can be destroyed permanently.',
+            'email_error'           => 'That email address belongs to a different expense.',
+        ],
+
         'transactions'  =>  [
             'cant_restore'          => 'This transaction is not deleted so it can not be restored.',
             'create_error'          => 'There was a problem creating this transaction. Please try again.',

@@ -29,6 +29,10 @@
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/request*')) }}" href="{{ route('admin.request.index') }}"><i class="fa fa-refresh"></i> Requests</a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('admin/expense*')) }}" href="{{ route('admin.expense.index') }}"><i class="fa fa-google-wallet" aria-hidden="true"></i> Expenses</a>
+            </li>
+
             <li class="nav-title">
                 {{ __('menus.backend.sidebar.system') }}
             </li>

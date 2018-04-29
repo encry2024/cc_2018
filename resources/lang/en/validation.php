@@ -123,6 +123,14 @@ return [
     'attributes' => [
 
         'backend' => [
+            'expense'  =>  [
+                'code'          =>  'Expense Code',
+                'user'          =>  'Issuer',
+                'requested_by'  =>  'Issued to',
+                'cause'         =>  'Cause',
+                'amount'        =>  'Amount',
+            ],
+
             'customer'  =>  [
                 'name'                  =>  'Customer Name',
                 'email'                 =>  'E-mail',

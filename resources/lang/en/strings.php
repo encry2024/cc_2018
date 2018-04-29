@@ -14,6 +14,10 @@ return [
     */
 
     'backend' => [
+        'expenses' => [
+            'no_deleted'    =>  'There are no delete expenses.'
+        ],
+
         'transactions' => [
             'no_deleted'    =>  'There are no delete transactions.'
         ],
