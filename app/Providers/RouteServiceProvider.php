@@ -8,6 +8,7 @@ use App\Models\Item\Item;
 use App\Models\Customer\Customer;
 use App\Models\Transaction\Transaction;
 use App\Models\Order\Order;
+use App\Models\Accounts\Expense\Expense;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -82,6 +83,13 @@ class RouteServiceProvider extends ServiceProvider
             $order = new Order;
 
             return Order::withTrashed()->where($order->getRouteKeyName(), $value)->first();
+        });
+
+        # Expense
+        $this->bind('deletedExpense', function ($value) {
+            $expense = new Expense;
+
+            return Expense::withTrashed()->where($expense->getRouteKeyName(), $value)->first();
         });
 
         parent::boot();
