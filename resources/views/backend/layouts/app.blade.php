@@ -13,6 +13,7 @@
         <meta name="author" content="@yield('meta_author', 'Anthony Rappa')">
         <link rel="stylesheet" href="{{ asset('js/chosen_v1.8.3/chosen-bootstrap-css.css') }}">
         <link rel="stylesheet" href="{{ asset('js/chosen_v1.8.3/chosen.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/highcharts.css') }}">
         <link rel="stylesheet" href="{{ asset('notific8/dist/notific8.css') }}">
         @yield('meta')
 
@@ -25,6 +26,7 @@
 
         @stack('after-styles')
         <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/highcharts.js') }}"></script>
         <script src="{{ asset('js/moment.js') }}"></script>
         <script src="{{ asset('notific8/src/js/notific8.js') }}"></script>
         <script>
