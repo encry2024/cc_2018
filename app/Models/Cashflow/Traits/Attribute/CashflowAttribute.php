@@ -8,9 +8,4 @@ trait CashflowAttribute
     {
         return class_basename($this->cashflowable_type);
     }
-
-    public function getReceivableAttribute()
-    {
-        return $this->cashflowable_type->receivable;
-    }
 }

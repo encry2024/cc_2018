@@ -4,6 +4,7 @@ namespace App\Models\Payment\Cash\Traits\Relationship;
 
 use App\Models\Payment\Payment\Payment;
 use App\Models\Auth\User;
+use App\Models\Order\Order;
 
 trait CashRelationship
 {
@@ -15,5 +16,10 @@ trait CashRelationship
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
     }
 }

@@ -10,13 +10,6 @@ use App\Http\Requests\Backend\Report\ViewReceivableRequest;
 
 class ReportController extends Controller
 {
-    protected $cashflow;
-
-    public function __construct(Cashflow $cashflow)
-    {
-        $this->cashflow = $cashflow;
-    }
-
     public function viewPayableAccount(ViewPayableRequest $request)
     {
         return view('backend.report.account.payable');
@@ -24,10 +17,10 @@ class ReportController extends Controller
 
     public function viewReceivableAccount(ViewReceivableRequest $request)
     {
-        // $receivables = $this->cashflow->receivable;
+        $cashflows = Cashflow::where('cashflowable_type', 'App\Models\Payment\Payment\Payment')->paginate(25);
 
-        // dd($receivables);
+        // dd($cashflows);
 
-        return view('backend.report.account.receivable');
+        return view('backend.report.account.receivable')->withCashflows($cashflows);
     }
 }

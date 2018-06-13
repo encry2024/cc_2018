@@ -198,6 +198,7 @@
     </div>
 </div>
 
+
 <!-- Add Payment Modal -->
 <form class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="add_payment_modal" action="{{ route('admin.order.add_payment', $model->id) }}" method="POST">
     {{ csrf_field() }}
@@ -232,6 +233,21 @@
             <div class="modal-footer">
                 <button type="submit" class="btn btn-success">Confirm</button>
                 <a class="btn btn-danger" id="close_add_payment_modal">Cancel</a>
+            </div>
+        </div>
+    </div>
+</form>
+@endif
+
+@if (Route::currentRouteName() == "admin.report.receivable")
+<form class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="filter_modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Filter Account Receivable</h5>
+            </div>
+            <div class="modal-body">
+
             </div>
         </div>
     </div>

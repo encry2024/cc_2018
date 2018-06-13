@@ -14,7 +14,8 @@ return [
     */
 
     'backend' => [
-        'payables'  =>  [
+        'receivables'  =>  [
+            'main'      =>  'Account Receivables',
             'title'     =>  'Payable',
             'all'       =>  'Remove Filter',
             'filter'    =>  'Filter Payables'
@@ -108,7 +109,7 @@ return [
         'sidebar' => [
             'dashboard' =>  'Dashboard',
             'supplier'  =>  'Suppliers',
-            'item'      =>  'Items',
+            'item'      =>  'Inventory',
             'customer'  =>  'Customers',
             'transaction'   =>  'Transactions',
             'general'   =>  'General',
