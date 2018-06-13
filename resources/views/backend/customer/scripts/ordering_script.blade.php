@@ -6,7 +6,8 @@
     total_cost_label         = $("#total_cost_label");
     customer_order_container = $("#customer_order_container"),
     payment_type             = $("#payment_type_dropdown"),
-    requested_quantity_field = $("#requested_quantity");
+    requested_quantity_field = $("#requested_quantity"),
+    sales_invoice_field      = $("#sales_invoice");
 
     let item_weight     = 0,
     item_selling_price  = 0,
@@ -136,11 +137,11 @@
                         for(let i=0; i<selected_item.length; i++) {
                             item = selected_item[i];
                             // Remove selected item from item_id_list array
-                            let itemIdListArray = _.remove(item_id_list, function(value) { return value === parseInt(item.dataset.itemId); });
+                            let itemIdListArray     = _.remove(item_id_list, function(value) { return value === parseInt(item.dataset.itemId); });
                             // Remove selected item from customer_orders
                             let customerOrdersArray = _.remove(customer_orders, customer_order => customer_order.item_id === parseInt(item.dataset.itemId));
                             // Remove selected item from selected_item
-                            let selectedItemArray = _.remove(selected_item, item => item.dataset.itemId === parseInt(item.dataset.itemId));
+                            let selectedItemArray   = _.remove(selected_item, item => item.dataset.itemId === parseInt(item.dataset.itemId));
                             // Remove item from the customer's order table
                             item.remove();
                             $("#item_count").text(item_id_list.count());
@@ -251,7 +252,13 @@
                     type: 'warning'
                 });
             } else {
-                if (collection_date == null) {
+                if (sales_invoice_field.val() == "") {
+                    swal({
+                        title: 'Sales Invoice field is empty.',
+                        confirmButtonText: 'Ok',
+                        type: 'warning'
+                    });
+                } else if (collection_date == null) {
                     swal({
                         title: 'Collection Date field is empty.',
                         confirmButtonText: 'Ok',
@@ -391,7 +398,7 @@
 
         function displayTotalCost()
         {
-            let total_cost          = 0;
+            let total_cost = 0;
 
             for (let i=0 ; i<customer_orders.length ; i++) {
                 let data = customer_orders[i];

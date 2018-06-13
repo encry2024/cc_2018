@@ -1,9 +1,9 @@
 <div class="sidebar">
     <nav class="sidebar-nav">
         <ul class="nav">
-            <li class="nav-title">
+            {{-- <li class="nav-title">
                 {{ __('menus.backend.sidebar.general') }}
-            </li>
+            </li> --}}
 
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/dashboard')) }}" href="{{ route('admin.dashboard') }}"><i class="icon-speedometer"></i> {{ __('menus.backend.sidebar.dashboard') }}</a>
@@ -33,9 +33,29 @@
                 <a class="nav-link {{ active_class(Active::checkUriPattern('admin/expense*')) }}" href="{{ route('admin.expense.index') }}"><i class="fa fa-google-wallet" aria-hidden="true"></i> Expenses</a>
             </li>
 
-            <li class="nav-title">
+            <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/auth*'), 'open') }}">
+                    <a class="nav-link nav-dropdown-toggle" href="#">
+                        <i class="icon-graph"></i> Account Report
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/report/receivable')) }}" href="{{ route('admin.report.receivable') }}">
+                                Receivables
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/report/payable')) }}" href="{{ route('admin.report.payable') }}">
+                                Payables
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+            {{-- <li class="nav-title">
                 {{ __('menus.backend.sidebar.system') }}
-            </li>
+            </li> --}}
 
             @if ($logged_in_user->isAdmin())
                 <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/auth*'), 'open') }}">

@@ -1,6 +1,15 @@
 <div class="row">
     <div class="col-lg-12">
-    <h5 class="card-title">CUSTOMER CURRENT USABLE CREDIT</h5>
+        <h5 class="card-title">SALES INVOICE</h5>
+        <hr>
+        <div class="form-group row">
+            {{ html()->label('Sales Invoice Number')->class('col-md-4 form-control-label')->for('sales_invoice') }}
+            <div class="col-sm-8">
+                <input type="string" class="form-control" value="{{ $customer->sales_invoice }}" id="sales_invoice">
+            </div>
+        </div><!--form-group-->
+        <br>
+        <h5 class="card-title">CUSTOMER CURRENT USABLE CREDIT</h5>
         <hr>
         <div class="form-group row">
             {{ html()->label('USABLE CREDIT')->class('col-md-4 form-control-label')->for('usable_credit') }}

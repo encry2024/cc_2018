@@ -20,5 +20,5 @@ class Cashflow extends Model
         'cashflowable_type'
     ];
 
-    protected $append = ['type'];
+    protected $append = ['type', 'receivable'];
 }

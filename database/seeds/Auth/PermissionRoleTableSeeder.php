@@ -68,6 +68,9 @@ class PermissionRoleTableSeeder extends Seeder
         Permission::create(['name' => 'restore expense']);
         Permission::create(['name' => 'delete expense']);
         Permission::create(['name' => 'force delete expense']);
+        # View Account Report Permission
+        Permission::create(['name' => 'view receivables']);
+        Permission::create(['name' => 'view payables']);
 
         // ALWAYS GIVE ADMIN ROLE ALL PERMISSIONS
         $admin->givePermissionTo('view backend');
@@ -112,6 +115,9 @@ class PermissionRoleTableSeeder extends Seeder
         $admin->givePermissionTo('restore expense');
         $admin->givePermissionTo('delete expense');
         $admin->givePermissionTo('force delete expense');
+        # Give admin all permission to Account Report
+        $admin->givePermissionTo('view receivables');
+        $admin->givePermissionTo('view payables');
 
         // Assign Permissions to other Roles
         $executive->givePermissionTo('view backend');

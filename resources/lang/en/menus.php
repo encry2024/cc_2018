@@ -14,6 +14,12 @@ return [
     */
 
     'backend' => [
+        'payables'  =>  [
+            'title'     =>  'Payable',
+            'all'       =>  'Remove Filter',
+            'filter'    =>  'Filter Payables'
+        ],
+
         'expenses'  =>  [
             'title'     =>  'Expense',
             'all'       =>  'Expenses',

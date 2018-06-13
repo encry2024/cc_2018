@@ -3053,6 +3053,10 @@
   clip: auto;
 }
 
+.bg-vs-blue {
+  background-color: #007ACC !important;
+}
+
 /*!
  * Bootstrap v4.0.0 (https://getbootstrap.com)
  * Copyright 2011-2018 The Bootstrap Authors

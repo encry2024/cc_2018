@@ -33,6 +33,45 @@ return [
     ],
 
     'backend' => [
+        'receivables' => [
+            'filter'     =>  'Filter Account Receivable',
+            'management' =>  'Account Receivable Report',
+
+            'table' =>  [
+                'sales_invoice' =>  'Sales Invoice',
+                'user'          =>  'Issuer',
+                'customer'      =>  'Customer',
+                'balance'       =>  'Balance',
+                'collection'    =>  'Collection Date',
+                'created_at'    =>  'Date Created',
+                'updated_at'    =>  'Date Updated',
+                'deleted_at'    =>  'Date Deleted',
+                'total'         =>  'Receivable total|Receivables total'
+            ],
+
+            'tabs'  =>  [
+                'titles'    =>  [
+                    'overview'  =>  'Overview'
+                ],
+
+                'content'   =>  [
+                    'overview'  =>  [
+                        'code'          =>  'Expense Code',
+                        'user'          =>  'Issuer',
+                        'cause'         =>  'Cause',
+                        'requested_by'  =>  'Issued to',
+                        'amount'        =>  'Amount',
+                        'created_at'    =>  'Date Created',
+                        'updated_at'    =>  'Date Updated',
+                        'deleted_at'    =>  'Date Deleted',
+                    ]
+                ]
+            ],
+
+            'show'  =>  'Expense :expense',
+            'view'  =>  ':expense'
+        ],
+
         'expenses' => [
             'view'       =>  'View Expenses',
             'list'       =>  'List of Expenses',
